@@ -13,6 +13,7 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import cartago.*;
+import evaluation.EvaluationUtilities;
 import onto.classes.*;
 import edu.kit.aifb.datafu.*;
 import edu.kit.aifb.datafu.consumer.impl.BindingConsumerCollection;
@@ -85,14 +86,20 @@ public class LinkedDataFuSpider extends Artifact {
 	private Set<OWLAxiomWrapper> owlAxiomWrapperSet;
 
 	//NamingStrategy
-	Set<NamingStrategy> namingStrategySet;
+	private Set<NamingStrategy> namingStrategySet;
 
 	//DataFactory
-	OWLDataFactory dataFactory;
+	private OWLDataFactory dataFactory;
+
+	//Evaluation
+	private boolean evaluation = false;
+	private long lastRegisteredTime;
+	private long totalTime;
+	private List<Long> registeredTimeList;
+
 
 	public LinkedDataFuSpider() {
 		// set logging level to warning
-
 		Logger log = Logger.getLogger("edu.kit.aifb.datafu");
 		//log.setLevel(Level.WARNING);
 		log.setLevel(Level.OFF);
@@ -101,7 +108,8 @@ public class LinkedDataFuSpider extends Artifact {
 
 	/**
 	 * Initiate the artifact by passing a programFile for the ldfu engine
-	 * @param programFile
+	 * @param programFile program file for ldfu
+	 * @param inferred option for enabling inferred ontologies
 	 */
 	public void init(String programFile, boolean inferred) {
 		try {
@@ -118,7 +126,6 @@ public class LinkedDataFuSpider extends Artifact {
 			QueryConsumerImpl queryConsumer = new QueryConsumerImpl(base);
 			SparqlParser sparqlParser = new SparqlParser(new StringReader(COLLECT_QUERY));
 			sparqlParser.parse(queryConsumer, new InternalOrigin(""));
-
 			ConstructQuery query = queryConsumer.getConstructQueries().iterator().next();
 
 			triples = new BindingConsumerCollection();
@@ -138,6 +145,21 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	/**
+	 * Supercharge of init in case we want to run in evaluation mode
+	 * @param programFile program file for ldfu
+	 * @param inferred option for enabling inferred ontologies
+	 * @param evaluation if true, enable the evaluation option
+	 */
+	public void init(String programFile, boolean inferred, boolean evaluation){
+		init(programFile, inferred);
+		this.evaluation = evaluation;
+		if (evaluation){
+			this.totalTime = 0;
+			this.registeredTimeList =  new ArrayList<>();
+		}
+
+	}
+	/**
 	 * Initiate parameters and prepare the belief naming strategy by computing all known namespaces
 	 */
 	private void initParameters(boolean inferred) {
@@ -150,7 +172,6 @@ public class LinkedDataFuSpider extends Artifact {
 		reasonerFactory = new ReasonerFactory();
 
 		try {
-
 			owlOntology = OWLManager.createOWLOntologyManager().createOntology();
 		} catch (OWLOntologyCreationException e){
 			e.printStackTrace();
@@ -179,6 +200,7 @@ public class LinkedDataFuSpider extends Artifact {
 	 */
 	@OPERATION
 	public void register(String originURI) {
+		if (evaluation)
 		registeredURIset.add(originURI);
 		owlOntology = OntologyExtractionManager.addOntology(originURI, owlOntology, registeredURIset);
 
@@ -346,6 +368,12 @@ public class LinkedDataFuSpider extends Artifact {
 	 */
 	@OPERATION
 	public void crawl(String originURI){
+		long startTime = 0L;
+		long endTime = 0L;
+		if (evaluation){
+			startTime = System.currentTimeMillis();
+		}
+
 		if (program == null) return;
 
 		EvaluateProgramConfig config = new EvaluateProgramConfig();
@@ -380,7 +408,6 @@ public class LinkedDataFuSpider extends Artifact {
 		try {
 			if (!uriCreated) {
 				uri = URI.create("file:///" + Paths.get(originURI).toAbsolutePath().toString().replaceAll("\\\\","//"));
-				System.out.println();
 				eval.getInputOriginConsumer().consume(new RequestOrigin(uri, Request.Method.GET));
 				uriCreated = true;
 			}
@@ -398,6 +425,13 @@ public class LinkedDataFuSpider extends Artifact {
 			e.printStackTrace();
 		}
 
+		if (evaluation){
+			endTime = System.currentTimeMillis();
+			lastRegisteredTime = endTime - startTime;
+			totalTime += lastRegisteredTime;
+			registeredTimeList.add(lastRegisteredTime);
+		}
+
 		String subject;
 		String predicate;
 		String object;
@@ -407,29 +441,18 @@ public class LinkedDataFuSpider extends Artifact {
 		Set<OWLDataProperty> owlDataPropertySet = owlOntology.getDataPropertiesInSignature();
 
 		Set<OWLAxiom> owlCrawledAxiomSet = new HashSet<>();
-		for (Binding binding : this.triples.getCollection()) {
+		for (Binding binding : triples.getCollection()) {
 			Node[] st = binding.getNodes().getNodeArray();
 			subject = st[0].getLabel();
 			predicate = st[1].getLabel();
 			object = st[2].getLabel();
 			defineObsProperty("rdf", subject, predicate, object);
-			owlCrawledAxiomSet.add(getOwlAxiomFromTriple(subject, predicate, object, owlClassSet, owlObjectPropertySet, owlDataPropertySet, dataFactory));
+
+			OWLAxiom owlAxiom = getOwlAxiomFromTriple(subject, predicate, object, owlClassSet, owlObjectPropertySet, owlDataPropertySet, dataFactory);
+			if (owlAxiom != null){
+				owlCrawledAxiomSet.add(owlAxiom);
+			}
 		}
-
-		/*
-		catch (InterruptedException e) {
-			e.printStackTrace();
-			// TODO recover or ignore?
-		} catch (URISyntaxException e) {
-			// TODO throw it to make operation fail?
-			e.printStackTrace();
-		}*/
-
-
-		/*
-		if (!hasMadeRegister) {
-			return;
-		}*/
 
 
 		try {
@@ -474,14 +497,12 @@ public class LinkedDataFuSpider extends Artifact {
 	 * performs a GET request and updates the belief base as the result.
 	 */
 	@OPERATION
-	public void get(String originURI) {
-		//long startTime = System.currentTimeMillis();
-
-		/*
-		long endTime = System.currentTimeMillis();
-		op_time.set(new Double(endTime-startTime));
-		totalTime += endTime - startTime;
-		 */
+	public void get(String originURI) throws URISyntaxException {
+		long startTime = 0L;
+		long endTime = 0L;
+		if (evaluation){
+			startTime = System.currentTimeMillis();
+		}
 
 		RequestOrigin req;
 
@@ -491,23 +512,29 @@ public class LinkedDataFuSpider extends Artifact {
 		if (!uriCreated && originURI.startsWith("http")) {
 			uri = URI.create(originURI);
 		} else {
+			//Not likely to work because it points to a local file which can't handle http request, to modify
 			uri = URI.create("file:///" + Paths.get(originURI).toAbsolutePath().toString().replaceAll("\\\\", "//"));
 		}
 
 		req = new RequestOrigin(uri, Request.Method.GET);
-
 		BindingConsumerCollection triples = new BindingConsumerCollection();
-
 		EvaluateRequestOrigin eval = new EvaluateRequestOrigin();
+
 		eval.setTripleCallback(new BindingConsumerSink(triples));
 		try {
 			eval.consume(req);
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			return;
 		}
 
+		if (evaluation){
+			endTime = System.currentTimeMillis();
+			lastRegisteredTime = endTime - startTime;
+			totalTime += lastRegisteredTime;
+			registeredTimeList.add(lastRegisteredTime);
+
+		}
 
 		// authoritative subject
 		// TODO graph name available?
@@ -523,24 +550,18 @@ public class LinkedDataFuSpider extends Artifact {
 		Set<OWLObjectProperty> owlObjectPropertySet = owlOntology.getObjectPropertiesInSignature();
 		Set<OWLDataProperty> owlDataPropertySet = owlOntology.getDataPropertiesInSignature();
 
+
 		Set<OWLAxiom> owlCrawledAxiomSet = new HashSet<>();
-		for (Binding binding : this.triples.getCollection()) {
+		for (Binding binding : triples.getCollection()) {
 			Node[] st = binding.getNodes().getNodeArray();
 			subject = st[0].getLabel();
 			predicate = st[1].getLabel();
 			object = st[2].getLabel();
 			defineObsProperty("rdf", subject, predicate, object);
-			owlCrawledAxiomSet.add(getOwlAxiomFromTriple(subject, predicate, object, owlClassSet, owlObjectPropertySet, owlDataPropertySet, dataFactory));
-		}
-
-		/*
-		catch (InterruptedException e) {
-			e.printStackTrace();
-			// TODO recover or ignore?
-		} catch (URISyntaxException e) {
-			// TODO throw it to make operation fail?
-			e.printStackTrace();
-		}*/
+			OWLAxiom owlAxiom = getOwlAxiomFromTriple(subject, predicate, object, owlClassSet, owlObjectPropertySet, owlDataPropertySet, dataFactory);
+			if (owlAxiom != null){
+				owlCrawledAxiomSet.add(owlAxiom);
+			}}
 
 		try {
 			OWLOntology copiedOntology = OntologyExtractionManager.copyOntology(owlOntology);
@@ -590,17 +611,25 @@ public class LinkedDataFuSpider extends Artifact {
 			Set<Nodes> triples = new HashSet<>();
 			for (Object term : payload) {
 				// terms are exposed as strings to CArtAgO artifacts
-				System.out.println((String) term);
-				//Case 1, object is of type rdf(S, P, O)
 				Matcher m = tripleTermPattern.matcher((String) term);
 				if (m.matches()) {
 					Nodes n = new Nodes(asNode(m.group(1)), asNode(m.group(2)), asNode((m.group(3))));
-					System.out.println(n);
 					triples.add(n);
 				}
-
-				//Case 2,
 			}
+
+			/*
+			System.out.println("Document : " + req.getDocument());
+			System.out.println("State : "+ req.getState());
+			System.out.println("Group : "+ req.getGroup());
+			Collection<HeaderField> headerFields = req.getHeaders();
+			if (headerFields != null) {
+				for (HeaderField hf : headerFields){
+					System.out.println(hf.getName() + " ::: "+ hf.getValue());
+				}
+			}*/
+
+
 			req.setTriplesPayload(triples);
 
 			EvaluateUnsafeRequestOrigin eval = new EvaluateUnsafeRequestOrigin();
@@ -642,6 +671,7 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+
 	@OPERATION
 	public void delete(String originURI, Object[] payload) {
 		try {
@@ -669,6 +699,33 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+	@OPERATION
+	public void getLastRegisteredTime(OpFeedbackParam<Double> op_lastRegisteredTime){
+		if (evaluation){
+			op_lastRegisteredTime.set(new Double(lastRegisteredTime));
+		} else {
+			System.out.println("Operation failed : Cannot get LastRegisteredTime because the evaluation mode is turned off, please instanciate the artifact by enabling the evaluation mode");
+		}
+	}
+
+	@OPERATION
+	public void getTotalTime(OpFeedbackParam<Double> op_totalTime){
+		if (evaluation){
+			op_totalTime.set(new Double(totalTime));
+		} else {
+			System.out.println("Operation failed : Cannot get TotalTime because the evaluation mode is turned off, please instanciate the artifact by enabling the evaluation mode");
+		}
+	}
+
+	@OPERATION
+	public void writeEvaluationReport(String filename){
+		if (evaluation){
+			EvaluationUtilities.writeData(registeredTimeList, filename);
+		} else {
+			System.out.println("Operation failed : Cannot write an evaluation report because the evaluation mode is turned off, please instanciate the artifact by enabling the evaluation mode");
+		}
+	}
+
 	private OWLAxiom getOwlAxiomFromTriple(String subject, String predicate, Object object, Set<OWLClass> owlClassSet, Set<OWLObjectProperty> owlObjectProperties, Set<OWLDataProperty> owlDataProperties, OWLDataFactory dataFactory)
 	{
 		if (predicate.equals(rdfType)){
@@ -681,10 +738,7 @@ public class LinkedDataFuSpider extends Artifact {
 			}
 
 			//Case we didn't find the type class
-			OWLNamedIndividual namedIndividual = dataFactory.getOWLNamedIndividual(IRI.create(subject));
-			OWLClassExpression classExpression = dataFactory.getOWLClass(IRI.create(object.toString()));
-			OWLClassAssertionAxiom classAssertion = dataFactory.getOWLClassAssertionAxiom(classExpression, namedIndividual);
-			return classAssertion;
+			return null;
 
 		} else {
 			//We check all properties
@@ -722,15 +776,8 @@ public class LinkedDataFuSpider extends Artifact {
 				}
 			}
 		}
-		OWLObjectPropertyAssertionAxiom propertyAssertionAxiom =
-				dataFactory.getOWLObjectPropertyAssertionAxiom(
-							dataFactory.getOWLObjectProperty(IRI.create(predicate)),
-							dataFactory.getOWLNamedIndividual(IRI.create(subject)),
-							dataFactory.getOWLNamedIndividual(IRI.create(object.toString())
-							));
-		return propertyAssertionAxiom;
+		return null;
 	}
-
 
 
 	private Set<OWLAxiomWrapper> getOwlAxiomWrapperSet(OWLOntology o){

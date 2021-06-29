@@ -3,8 +3,6 @@
  *
  */
 
-defaultTasks 'run'
-
 apply plugin: 'java'
 
 version '0.1'
@@ -43,7 +41,9 @@ sourceSets {
     }
 }
 
-task run (type: JavaExec, dependsOn: 'classes') {
+
+
+task runLeubot (type: JavaExec, dependsOn: 'classes') {
     group ' JaCaMo'
     description 'runs the JaCaMo application'
     doFirst {
@@ -52,10 +52,4 @@ task run (type: JavaExec, dependsOn: 'classes') {
     main 'jacamo.infra.JaCaMoLauncher'
     args 'leubot.jcm'
     classpath sourceSets.main.runtimeClasspath
-}
-
-clean {
-    delete 'bin'
-    delete 'build'
-    delete 'log'
 }

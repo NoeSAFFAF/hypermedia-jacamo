@@ -2,8 +2,9 @@
  * @author Noé SAFFAF
  */
 
-entryPointGet("https://www.w3.org/ns/sosa/",false).
-//entryPointGet("ttl/sosa.ttl",true).
+entryPointGet("http://localhost:3030/dataLdfu?graph=getTest").
+//entryPointGet("https://www.w3.org/ns/sosa/").
+//entryPointGet("ttl/sosa.ttl").
 
 !testUnit.
 
@@ -12,6 +13,12 @@ entryPointGet("https://www.w3.org/ns/sosa/",false).
     !getPlan;
     .wait(1000);
 	.print("Test Assertion : Unit get test");
+	.count(rdf(_, _, _), Count) ;
+    if (Count>0) {
+        .print("Test simple get : Passed")
+    } else {
+        .print("Test simple get : Failed, No rdf belief was added")
+    }
     .
 
 { include("ldfu_agent.asl") }

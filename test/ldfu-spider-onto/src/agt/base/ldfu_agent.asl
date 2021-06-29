@@ -11,26 +11,38 @@
 
 
 +!getPlan : true <-
-    for (entryPointGet(IRI,LOCAL)){
-        get(IRI,LOCAL);
+    for (entryPointGet(IRI)){
+        get(IRI);
+        -entryPointGet(IRI);
     };
     .
 
-+!putPlan(IRI, OBJECT) : true <-
-    put(IRI, OBJECT);
++!putPlan : true <-
+    for (endPointPut(IRI, OBJECT)){
+        put(IRI, OBJECT);
+        -endPointPut(IRI, OBJECT);
+    };
     .
 
-+!postPlan(IRI, OBJECT) : true <-
-    post(IRI, OBJECT);
++!postPlan : true <-
+    for (endPointPost(IRI, OBJECT)){
+        post(IRI, OBJECT);
+        -endPointPost(IRI, OBJECT);
+    }
     .
 
-+!deletePlan(IRI, OBJECT) : true <-
-    delete(IRI, OBJECT);
++!deletePlan : true <-
+    for (endPointDelete(IRI, A)){
+        .print("helloe");
+        delete(IRI, A);
+        -endPointDelete(IRI, A);
+    }
     .
 
 +!registerPlan : true <-
 	for (entryPointRegister(IRI)){
        register(IRI);
+       -entryPointRegister(IRI)
  	}
 	.
 
@@ -43,6 +55,7 @@
 +!crawlPlan : true <-
 	for (entryPointCrawl(IRI)){
     	crawl(IRI);
+    	-entryPointCrawl(IRI);
 	}
 	.
 
@@ -53,7 +66,7 @@
 	}
 	.
 
-+!count :true <-
++!count : true <-
     .count(rdf(_, _, _), Count) ;
     .print("found ", Count, " triples.");
   	.

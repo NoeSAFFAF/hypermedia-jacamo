@@ -1,8 +1,10 @@
 mas ldfu_mas {
-
-    agent test_agent_measure_crawl
-    agent test_agent_measure_get
+    agent test_agent_cpu_artifact_instantiation
+    //agent test_agent_measure_crawl
+    //agent test_agent_measure_get
 
     asl-path: src/agt/base, src/agt/testAgt
+    java-path: ., src/env
 }
 
+//.send(test_agent_measure_crawl,tell,doStart)

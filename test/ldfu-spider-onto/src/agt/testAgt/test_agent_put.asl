@@ -2,16 +2,18 @@
  * @author Noé SAFFAF
  */
 
-endPointPut("http://localhost:8083/").
-entryPointCrawl("http://localhost:8083/").
+endPointPut("http://localhost:3030/dataLdfu?graph=putTest").
+entryPointCrawl("http://localhost:3030/dataLdfu?graph=putTest").
 
 !testUnit.
 
-+!create_object_and_put : entryPointPut(IRI) <-
++!create_object_and_put : endPointPut(IRI) <-
     .union(["rdf(http://www.w3.org/ns/sosa/ExampleSensor1,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,http://www.w3.org/ns/sosa/Sensor)"],
             ["rdf(http://www.w3.org/ns/sosa/ExampleSensor2,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,http://www.w3.org/ns/sosa/Sensor)"],
             OBJECT);
-    !putPlan(IRI,OBJECT);
+    -endPointPut(IRI);
+    +endPointPut(IRI,OBJECT);
+    !putPlan;
     .
 
 
@@ -21,6 +23,12 @@ entryPointCrawl("http://localhost:8083/").
     !crawlPlan;
     .wait(1000);
 	.print("Test Assertion : Unit put test");
+	.count(rdf(_, _, _), Count) ;
+    if (Count>0) {
+   		.print("Test simple put : Passed")
+   	} else {
+   		.print("Test simple put : Failed, No rdf belief was added")
+   	}
     .
 
 { include("ldfu_agent.asl") }

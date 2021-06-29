@@ -4,7 +4,7 @@ import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLOntology;
 import tools.CSVTools;
 import tools.IRITools;
-;
+
 import java.util.Map;
 /**
  * Strategy

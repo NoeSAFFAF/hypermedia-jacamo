@@ -15,12 +15,12 @@ repositories {
     mavenCentral()
     maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
     maven { url 'https://paul.ti.rw.fau.de/maven/repository/' }
-
     mavenLocal()
 }
 
 dependencies {
     compile group: 'org.jacamo', name: 'hypermedia-jacamo', version: '0.1'
+    compile group: 'org.jacamo', name: 'jacamo', version: '0.9'
 }
 
 sourceSets {
@@ -37,36 +37,26 @@ sourceSets {
     }
 }
 
-task runLdfuSpiderTest (type: JavaExec, dependsOn: 'onto.classes') {
+
+task runLdfuSpiderTest (type: JavaExec, dependsOn: 'classes') {
     group 'JaCaMo'
     description 'runs the JaCaMo application'
     doFirst {
         mkdir 'log'
     }
     main = 'jacamo.infra.JaCaMoLauncher'
-    args 'jcm/test/ldfu_spider_onto_test.jcm'
+    args 'ldfu_spider_onto_test.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 
-task runLdfuSpiderExecutionTimeTest (type: JavaExec, dependsOn: 'onto.classes') {
+task runLdfuSpiderExecutionTimeTest (type: JavaExec, dependsOn: 'classes') {
     group 'JaCaMo'
     description 'runs the JaCaMo application'
     doFirst {
         mkdir 'log'
     }
     main = 'jacamo.infra.JaCaMoLauncher'
-    args 'jcm/test/ldfu_spider_onto_execution_time_test.jcm'
-    classpath sourceSets.main.runtimeClasspath
-}
-
-task runExperimentalTest (type: JavaExec, dependsOn: 'onto.classes') {
-    group 'JaCaMo'
-    description 'runs the JaCaMo application'
-    doFirst {
-        mkdir 'log'
-    }
-    main = 'jacamo.infra.JaCaMoLauncher'
-    args 'jcm/experimental/experimental_test.jcm'
+    args 'ldfu_spider_onto_execution_time_test.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 
