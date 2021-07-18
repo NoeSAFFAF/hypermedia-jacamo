@@ -1,4 +1,4 @@
-package onto;
+package org.hypermedea.owl;
 
 
 import jason.asSyntax.ASSyntax;
@@ -6,7 +6,7 @@ import jason.asSyntax.Atom;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.OWLAxiomVisitorAdapter;
 import org.semanticweb.owlapi.util.ShortFormProvider;
-import tools.IRITools;
+import org.hypermedea.tools.Identifiers;
 
 import java.util.Objects;
 
@@ -108,7 +108,7 @@ public class OWLAxiomWrapper {
         }
 
         private String getEntityName(OWLEntity e) {
-            return IRITools.getJasonAtomIdentifier(namingStrategy.getShortForm(e));
+            return Identifiers.getJasonAtomIdentifier(namingStrategy.getShortForm(e));
         }
 
     }

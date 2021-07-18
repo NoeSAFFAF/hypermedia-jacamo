@@ -21,7 +21,7 @@ entryPointRegister("ttl/example_ontology.ttl").
 +!start : entryPointRegister(IRI) <-
     .my_name(NAME);
     .concat("ldfu_artifact_",NAME, NAME_ART);
-    makeArtifact(NAME_ART,"hypermedia.LinkedDataFuSpider",["get.n3",true],ART_ID);
+    makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3",true],ART_ID);
     focus(ART_ID);
     register(IRI);
     .

@@ -1,4 +1,4 @@
-package onto;
+package org.hypermedea.owl;
 
 import org.junit.Test;
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -40,13 +40,23 @@ public class OWLAxiomWrapperTest {
     }
 
     @Test
-    public void testGetPropertyNameByLabel() {
+    public void testGetPropertyNameByTaggedLabel() {
         OWLClassAssertionAxiom axiom = getClassAssertion();
         ShortFormProvider strategy = getNamingStrategy(NamingStrategyFactory.NamingStrategyType.BY_LABEL);
 
         OWLAxiomWrapper w = new OWLAxiomWrapper(axiom, strategy);
 
         assert w.getPropertyName().equals("class");
+    }
+
+    @Test
+    public void testGetPropertyNameByLabel() {
+        OWLObjectPropertyAssertionAxiom axiom = getObjectPropertyAssertion();
+        ShortFormProvider strategy = getNamingStrategy(NamingStrategyFactory.NamingStrategyType.BY_LABEL);
+
+        OWLAxiomWrapper w = new OWLAxiomWrapper(axiom, strategy);
+
+        assert w.getPropertyName().equals("objectProperty");
     }
 
     private OWLClassAssertionAxiom getClassAssertion() {

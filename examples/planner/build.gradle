@@ -1,5 +1,5 @@
 /**
- * Example project using the ThingArtifact class to ease interaction with WoT devices desribed by Thing Descriptions.
+ * Example project using the planner artifact artifact to generate executable plans from PDDL definitions.
  *
  */
 
@@ -15,13 +15,9 @@ targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
-    // artifact repository for JaCaMo-related project
-    maven { url 'https://raw.github.com/jacamo-lang/mvn-repo/master' }
-    // artifact repository for Linked-Data-Fu
+    maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
     maven { url 'https://paul.ti.rw.fau.de/maven/repository/' }
 
-    // only used for testing new versions of hypermedia-jacamo
-    // TODO replace with publications on Maven Central
     mavenLocal()
 }
 
@@ -50,7 +46,7 @@ task run (type: JavaExec, dependsOn: 'classes') {
         mkdir 'log'
     }
     main 'jacamo.infra.JaCaMoLauncher'
-    args 'leubot.jcm'
+    args 'planner.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 

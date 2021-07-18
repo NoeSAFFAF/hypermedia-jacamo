@@ -1,4 +1,4 @@
-package onto;
+package org.hypermedea.owl;
 
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.util.AnnotationValueShortFormProvider;
@@ -6,7 +6,7 @@ import org.semanticweb.owlapi.util.DefaultPrefixManager;
 import org.semanticweb.owlapi.util.ShortFormProvider;
 import org.semanticweb.owlapi.util.SimpleShortFormProvider;
 import org.semanticweb.owlapi.vocab.SKOSVocabulary;
-import tools.CSVTools;
+import org.hypermedea.tools.CSVTools;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataFactoryImpl;
 
 import java.util.ArrayList;
@@ -41,6 +41,8 @@ public class NamingStrategyFactory {
         BY_IRI
     }
 
+    public static NamingStrategyType DEFAULT_NAMING_STRATEGY = NamingStrategyType.BY_LABEL;
+
     private static final OWLAnnotationProperty SKOS_PREFLABEL;
     private static final OWLAnnotationProperty RDFS_LABEL;
     private static final OWLAnnotationProperty VANN_PREFERRED_NAMESPACE;
@@ -62,12 +64,7 @@ public class NamingStrategyFactory {
      * @return default naming strategy
      */
     public static ShortFormProvider createDefaultNamingStrategy(OWLOntologyManager m) {
-        ShortFormProvider byLabel = createNamingStrategy(NamingStrategyType.BY_LABEL, m);
-        // TODO byPreferredNamespace
-        ShortFormProvider byNamespace = createNamingStrategy(NamingStrategyType.BY_KNOWN_NAMESPACE, m);
-        ShortFormProvider byIRI = createNamingStrategy(NamingStrategyType.BY_IRI, m);
-
-        return new CascadeShortFormProvider(byLabel, byNamespace, byIRI);
+        return createNamingStrategy(DEFAULT_NAMING_STRATEGY, m);
     }
 
     /**
@@ -85,13 +82,21 @@ public class NamingStrategyFactory {
                 properties.add(SKOS_PREFLABEL);
                 properties.add(RDFS_LABEL);
 
+                Map<OWLAnnotationProperty, List<String>> emptyLangMap = new HashMap<>();
                 Map<OWLAnnotationProperty, List<String>> langMap = new HashMap<>();
+
                 List<String> lang = new ArrayList<>();
+                lang.add("en"); // TODO make language tag configurable
 
-                //lang.add("en"); // TODO others? Make languages parameterizable?
-                for (OWLAnnotationProperty p : properties) langMap.put(p, lang);
+                for (OWLAnnotationProperty p : properties) {
+                    langMap.put(p, lang);
+                    emptyLangMap.put(p, new ArrayList<>());
+                }
 
-                return new AnnotationValueShortFormProvider(properties, langMap, m);
+                // if the OWL entity has a non-tagged label, label should still be taken
+                ShortFormProvider fallback = new AnnotationValueShortFormProvider(properties, emptyLangMap, m);
+
+                return new AnnotationValueShortFormProvider(properties, langMap, m, fallback);
 
             case BY_PREFERRED_NAMESPACE:
                 DefaultPrefixManager preferredPrefixManager = new DefaultPrefixManager();

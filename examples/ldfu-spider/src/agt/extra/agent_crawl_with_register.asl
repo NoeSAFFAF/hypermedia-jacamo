@@ -54,7 +54,7 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
 +!start : entryPointCrawl(IRI_CRAWL) & entryPointRegister(IRI_REGISTER) <-
     .my_name(NAME);
     .concat("ldfu_artifact_",NAME, NAME_ART);
-    makeArtifact(NAME_ART,"hypermedia.LinkedDataFuSpider",["get.n3"],ART_ID);
+    makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
     focus(ART_ID);
     register(IRI_REGISTER);
     crawl(IRI_CRAWL);

@@ -46,7 +46,7 @@ task runLdfuSpider (type: JavaExec, dependsOn: 'classes') {
         mkdir 'log'
     }
     main 'jacamo.infra.JaCaMoLauncher'
-    args 'ldfu_spider.jcm'
+    args 'planner.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 
