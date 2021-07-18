@@ -42,9 +42,7 @@ public class NamingStrategyFactory {
     }
 
     private static final OWLAnnotationProperty SKOS_PREFLABEL;
-
     private static final OWLAnnotationProperty RDFS_LABEL;
-
     private static final OWLAnnotationProperty VANN_PREFERRED_NAMESPACE;
 
     static {

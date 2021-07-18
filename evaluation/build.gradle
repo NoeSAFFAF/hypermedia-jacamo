@@ -3,7 +3,7 @@
  *
  */
 
-defaultTasks 'runLdfuSpider'
+defaultTasks 'runAgentEvaluation'
 
 apply plugin: 'java'
 
@@ -21,7 +21,8 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.hypermedea', name: 'hypermedia-jacamo', version: '0.1'
+    implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
+    implementation group: 'org.hypermedea', name: 'hypermedia-jacamo', version: '0.1'
     //implementation rootProject
 }
 
@@ -30,8 +31,6 @@ sourceSets {
         java {
             srcDir 'src/env'
             srcDir 'src/agt'
-            srcDir 'src/org'
-            srcDir 'src/java'
         }
         resources {
             srcDir 'src/resources'
@@ -39,14 +38,14 @@ sourceSets {
     }
 }
 
-task runLdfuSpider (type: JavaExec, dependsOn: 'classes') {
+task runAgentEvaluation (type: JavaExec, dependsOn: 'classes') {
     group ' JaCaMo'
     description 'runs the JaCaMo application'
     doFirst {
         mkdir 'log'
     }
     main 'jacamo.infra.JaCaMoLauncher'
-    args 'ldfu_spider.jcm'
+    args 'execution_time_test.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 

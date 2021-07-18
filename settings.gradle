@@ -1,0 +1,4 @@
+rootProject.name = "hypermedia-jacamo"
+include 'examples:ldfu-spider'
+include 'evaluation'
+

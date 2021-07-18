@@ -67,8 +67,8 @@ public class LinkedDataFuSpider extends Artifact {
 	 */
 	private class ObsPropertyManager extends OWLOntologyChangeVisitorAdapter implements OWLOntologyChangeListener {
 
+		private final Map<OWLAxiom, ObsProperty> propertiesByAxiom = new HashMap<>();
 		private final Map<OWLOntology, Set<ObsProperty>> propertiesByOntology = new HashMap<>();
-
 		private final Set<ObsProperty> inferredProperties = new HashSet<>();
 
 		@Override
@@ -101,15 +101,18 @@ public class LinkedDataFuSpider extends Artifact {
 			}
 		}
 
+
+
 		@Override
 		public void visit(AddAxiom change) {
 			if (change.getOntology().equals(rootOntology)) {
 				OWLAxiom axiom = change.getChangeData().getAxiom();
 
+				/*
 				Set<OWLAxiom> singleton = new HashSet<>();
 				singleton.add(axiom);
-
-				definePropertiesForAxioms(singleton);
+				*/
+				propertiesByAxiom.put(axiom,definePropertyForAxiom(axiom));
 			}
 		}
 
@@ -117,7 +120,14 @@ public class LinkedDataFuSpider extends Artifact {
 		public void visit(RemoveAxiom change) {
 			if (change.getOntology().equals(rootOntology)) {
 				OWLAxiom axiom = change.getChangeData().getAxiom();
-				// TODO remove associated property
+				if (propertiesByAxiom.containsKey(axiom)){
+					ObsProperty propertyToRemove = propertiesByAxiom.get(axiom);
+					if (propertyToRemove.getValues().length == 1) {
+						removeObsPropertyByTemplate(propertyToRemove.getName(), propertyToRemove.getValue(0));
+					} else if (propertyToRemove.getValues().length == 2) {
+						removeObsPropertyByTemplate(propertyToRemove.getName(), propertyToRemove.getValue(0), propertyToRemove.getValue(1));
+					}
+				}
 			}
 		}
 
@@ -148,33 +158,20 @@ public class LinkedDataFuSpider extends Artifact {
 				p.addAnnot(annotation);
 			}
 		}
-
 	}
 
 	private static final String COLLECT_QUERY = "construct { ?s ?p ?o . } where { ?s ?p ?o . }";
-
 	private static final String RDF_TYPE = OWLRDFVocabulary.RDF_TYPE.toString();
-
 	private static final String CRAWLED_ASSERTIONS_IRI = String.format("urn:uuid:%s", UUID.randomUUID());
-
 	private static final String PREDICATE_IRI_FUNCTOR = "predicate_uri";
 
 	private Pattern tripleTermPattern = Pattern.compile("rdf\\((.*),(.*),(.*)\\)");
-
 	private Program program;
-
 	private BindingConsumerCollection triples;
-
 	private OWLReasoner reasoner;
-
 	private OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
-
 	private OWLOntology rootOntology;
-
-	private Map<OWLAxiomWrapper, ObsProperty> observablePropertyTripleMap = new HashMap<>();
-
 	private ShortFormProvider namingStrategy;
-
 	private OWLDataFactory dataFactory = new OWLDataFactoryImpl();
 
 	public LinkedDataFuSpider() {
@@ -256,7 +253,6 @@ public class LinkedDataFuSpider extends Artifact {
 			e.printStackTrace();
 			// TODO log
 		}
-
 		namingStrategy = NamingStrategyFactory.createDefaultNamingStrategy(ontologyManager);
 	}
 
@@ -325,6 +321,17 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	/**
+	 * External Action to check if the ontology is satisfiable (no unsatisfiable owl class).
+	 *
+	 * @param b A boolean parameter to unify with the response of the External action
+	 */
+	@OPERATION
+	public void isSatisfiable(OpFeedbackParam<Boolean> b){
+		if (rootOntology == null) b.set(true);
+		else b.set(reasoner.getUnsatisfiableClasses().getEntitiesMinusBottom().size() == 0);
+	}
+
+	/**
 	 * External action to execute the Linked Data program and notifies agent with collected triples and their unary
 	 * binary axioms according to the already registered ontologies. Can accept local file and can have the inferred
 	 * axioms (Class assertion only) of the unary/binary beliefs.
@@ -351,21 +358,12 @@ public class LinkedDataFuSpider extends Artifact {
 			e.printStackTrace();
 		}
 
-		if (hasObsProperty("rdf")) removeObsProperty("rdf"); // TODO only if crawl succeeded
+		//if (hasObsProperty("rdf")) removeObsProperty("rdf"); // TODO only if crawl succeeded
 
 		// TODO clear axioms in root ontology?
 
 		definePropertiesForBindings(this.triples.getCollection());
-
-		for (Binding binding : this.triples.getCollection()) {
-			Node[] st = binding.getNodes().getNodeArray();
-			OWLAxiom axiom = asOwlAxiom(st);
-
-			if (axiom != null) {
-				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
-				ontologyManager.applyChange(addAxiom);
-			}
-		}
+		addCollectionToOnt(this.triples.getCollection());
 	}
 
 	/**
@@ -396,19 +394,7 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 
 		definePropertiesForBindings(triples.getCollection());
-
-		// FIXME duplicate code wrt crawl()
-
-		for (Binding binding : triples.getCollection()) {
-			Node[] st = binding.getNodes().getNodeArray();
-
-			OWLAxiom axiom = asOwlAxiom(st);
-
-			if (axiom != null) {
-				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
-				ontologyManager.applyChange(addAxiom);
-			}
-		}
+		addCollectionToOnt(triples.getCollection());
 	}
 
 	/**
@@ -422,7 +408,6 @@ public class LinkedDataFuSpider extends Artifact {
 			Set<Nodes> triples = new HashSet<>();
 			for (Object term : payload) {
 				// terms are exposed as strings to CArtAgO artifacts
-				System.out.println((String) term);
 				//Case 1, object is of type rdf(S, P, O)
 				Matcher m = tripleTermPattern.matcher((String) term);
 				if (m.matches()) {
@@ -501,6 +486,41 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+	@OPERATION
+	public void removeObsPropertyBinding(Object term) {
+		Matcher m = tripleTermPattern.matcher((String) term);
+		if (m.matches()) {
+			if (hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
+				removeObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3));
+				Nodes n = new Nodes(asNode(m.group(1)), asNode(m.group(2)), asNode((m.group(3))));
+				OWLAxiom a = asOwlAxiom(n.getNodeArray());
+				RemoveAxiom removeAxiom = new RemoveAxiom(rootOntology, a);
+				ontologyManager.applyChange(removeAxiom);
+			}
+		}
+	}
+
+	@OPERATION
+	public void removeAllObsPropertiesBinding(){
+		while (true) {
+			ObsProperty o = null;
+			try {
+				 o = getObsProperty("rdf");
+			} catch (Exception e){
+				return;
+			}
+			if (o != null && o.getValues().length == 3) {
+				Nodes n = new Nodes(asNode(o.getValue(0).toString()), asNode(o.getValue(1).toString()), asNode(o.getValue(2).toString()));
+				removeObsPropertyByTemplate("rdf", o.getValue(0), o.getValue(1), o.getValue(2));
+				OWLAxiom a = asOwlAxiom(n.getNodeArray());
+				if (a != null) {
+					RemoveAxiom removeAxiom = new RemoveAxiom(rootOntology, a);
+					ontologyManager.applyChange(removeAxiom);
+				}
+			}
+		}
+	}
+
 	private Set<ObsProperty> definePropertiesForBindings(Collection<Binding> bindings) {
 		Set<ObsProperty> properties = new HashSet<>();
 
@@ -518,29 +538,37 @@ public class LinkedDataFuSpider extends Artifact {
 		return properties;
 	}
 
+	private ObsProperty definePropertyForAxiom(OWLAxiom axiom){
+		OWLAxiomWrapper w = new OWLAxiomWrapper(axiom, namingStrategy);
+
+		String name = w.getPropertyName();
+		Object[] args = w.getPropertyArguments();
+
+		ObsProperty p = null;
+
+		if (args.length == 1) p = defineObsProperty(name, args[0]);
+		else if (args.length == 2) p = defineObsProperty(name, args[0], args[1]);
+
+		if (p != null) {
+			String fullName = w.getPropertyIRI();
+
+			if (fullName != null) {
+				StringTerm t = ASSyntax.createString(fullName);
+				Structure annotation = ASSyntax.createStructure(PREDICATE_IRI_FUNCTOR, t);
+				p.addAnnot(annotation);
+			}
+			return p;
+		} else {
+			return null;
+		}
+
+	}
+
 	private Set<ObsProperty> definePropertiesForAxioms(Collection<OWLAxiom> axioms) {
 		Set<ObsProperty> properties = new HashSet<>();
-
 		for (OWLAxiom axiom : axioms) {
-			OWLAxiomWrapper w = new OWLAxiomWrapper(axiom, namingStrategy);
-
-			String name = w.getPropertyName();
-			Object[] args = w.getPropertyArguments();
-
-			ObsProperty p = null;
-
-			if (args.length == 1) p = defineObsProperty(name, args[0]);
-			else if (args.length == 2) p = defineObsProperty(name, args[0], args[1]);
-
-			if (p != null) {
-				String fullName = w.getPropertyIRI();
-
-				if (fullName != null) {
-					StringTerm t = ASSyntax.createString(fullName);
-					Structure annotation = ASSyntax.createStructure(PREDICATE_IRI_FUNCTOR, t);
-					p.addAnnot(annotation);
-				}
-
+			ObsProperty p = definePropertyForAxiom(axiom);
+			if (p != null){
 				properties.add(p);
 			}
 		}
@@ -557,6 +585,7 @@ public class LinkedDataFuSpider extends Artifact {
 			else if (args.length == 2) removeObsPropertyByTemplate(name, args[0], args[1]);
 		}
 	}
+
 
 	/**
 	 * Encapsulate a file or HTTP resource into an upper-level class.
@@ -614,6 +643,18 @@ public class LinkedDataFuSpider extends Artifact {
 	private boolean isRegistered(OWLEntity e) {
 		OWLAxiom decl = dataFactory.getOWLDeclarationAxiom(e);
 		return !ontologyManager.getOntologies(decl).isEmpty();
+	}
+
+	private void addCollectionToOnt(Collection<Binding> bindingCollection){
+		for (Binding binding : bindingCollection) {
+			Node[] st = binding.getNodes().getNodeArray();
+			OWLAxiom axiom = asOwlAxiom(st);
+
+			if (axiom != null) {
+				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
+				ontologyManager.applyChange(addAxiom);
+			}
+		}
 	}
 
 	private Object asBuiltIn(Node n) {
