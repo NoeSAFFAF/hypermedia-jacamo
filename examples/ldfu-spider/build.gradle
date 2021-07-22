@@ -22,7 +22,6 @@ repositories {
 
 dependencies {
     compile group: 'org.hypermedea', name: 'hypermedia-jacamo', version: '0.1'
-    //implementation rootProject
 }
 
 sourceSets {
@@ -46,7 +45,7 @@ task runLdfuSpider (type: JavaExec, dependsOn: 'classes') {
         mkdir 'log'
     }
     main 'jacamo.infra.JaCaMoLauncher'
-    args 'planner.jcm'
+    args 'ldfu_spider.jcm'
     classpath sourceSets.main.runtimeClasspath
 }
 

@@ -1,8 +1,8 @@
 mas ldfu_mas {
     //agent test_agent_measure_crawl
     //agent test_agent_measure_get
-    agent test_agent_measure_crawl_with_onto
-    //agent test_agent_measure_get_with_onto
+    //agent test_agent_measure_crawl_with_onto
+    agent test_agent_measure_get_with_onto
 
     asl-path: src/agt/
     java-path: ., src/env, src/env/profilingArtifacts

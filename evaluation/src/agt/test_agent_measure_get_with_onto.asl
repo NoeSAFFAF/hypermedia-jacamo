@@ -10,7 +10,7 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"hypermedia.LinkedDataFuSpider",["get.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
      focus(ART_ID);
      .
 
@@ -30,13 +30,13 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
 	.
 
 +!profileWithCPUArtifact : true <-
-     for (.range(I,1,100)){
+     for (.range(I,1,1)){
         for (entryPointGet(IRI)){
             startTimeMeasure;
             get(IRI);
             endTimeMeasure(TIME);
             .print("Get exec time : ",TIME);
-            .count(sensor(_), CountSensor) ;
+            .count(sensor(_), CountSensor);
             .print("found ", CountSensor, " sensors.");
             removeAllObsPropertiesBinding;
         };
