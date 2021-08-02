@@ -3,14 +3,15 @@
 @prefix xs:   <http://www.w3.org/2001/XMLSchema#> .
 @prefix ex: <http://www.myexample.org/> .
 @prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix c_sosa: <http://www.semanticweb.org/noesaffaf/ontologies/2021/4/custom-sosa#> .
 
 
-ex:ExamplePlatform1 rdf:type sosa:Platform ;
+ex:ExamplePlatform1 rdf:type c_sosa:Platform ;
                          rdfs:label "ExamplePlatform1" .
 
-ex:ExampleSensor1 rdf:type sosa:Sensor ;
+ex:ExampleSensor1 rdf:type c_sosa:Sensor ;
                       sosa:isHostedBy ex:ExamplePlateform1 .
 
-ex:ExampleSensor2 rdf:type sosa:Sensor ;
+ex:ExampleSensor2 rdf:type c_sosa:Sensor ;
                       sosa:isHostedBy ex:ExamplePlateform2 ;
                       rdfs:label "ExampleSensor2" .

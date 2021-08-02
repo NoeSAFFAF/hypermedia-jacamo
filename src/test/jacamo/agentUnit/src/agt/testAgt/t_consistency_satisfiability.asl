@@ -2,7 +2,7 @@
  * @author Noé SAFFAF
  */
 
-entryPointRegister("ttl/example_ontology.ttl").
+entryPointRegister("https://www.w3.org/ns/sosa/").
 
 !testUnit.
 

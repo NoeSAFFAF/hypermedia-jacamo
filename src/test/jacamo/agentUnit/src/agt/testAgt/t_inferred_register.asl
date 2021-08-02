@@ -2,7 +2,7 @@
  * @author Noé SAFFAF
  */
 
-entryPointRegister("ttl/example_ontology.ttl").
+entryPointRegister("ttl/custom_sosa_n.ttl").
 
 !testUnit.
 

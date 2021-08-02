@@ -22,7 +22,7 @@ repositories {
 
 dependencies {
     implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
-    implementation group: 'org.hypermedea', name: 'hypermedia-jacamo', version: '0.1'
+    implementation group: 'org.hypermedea', name: 'hypermedea', version: '0.1'
 }
 
 sourceSets {

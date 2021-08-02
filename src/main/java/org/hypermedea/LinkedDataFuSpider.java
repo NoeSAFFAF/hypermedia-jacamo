@@ -315,7 +315,6 @@ public class LinkedDataFuSpider extends Artifact {
 
 	/**
 	 * External Action to check if the ontology is consistent (no individual instance of owl:Nothing).
-	 *
 	 * @param b A boolean parameter to unify with the response of the External action
 	 */
 	@OPERATION
@@ -326,7 +325,6 @@ public class LinkedDataFuSpider extends Artifact {
 
 	/**
 	 * External Action to check if the ontology is satisfiable (no unsatisfiable owl class).
-	 *
 	 * @param b A boolean parameter to unify with the response of the External action
 	 */
 	@OPERATION
@@ -371,7 +369,6 @@ public class LinkedDataFuSpider extends Artifact {
 
 	/**
 	 * Performs a GET request and updates the belief base as the result.
-	 *
 	 * @param originURI The entrypoint for get request
 	 */
 	@OPERATION
@@ -508,43 +505,51 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	/**
-	 * Add one Obs property matching the passed term //TODO Perhaprs replacing it with a list of terms like in put
-	 * @param term
+	 * Add Obs properties matching the passed terms
+	 * @param payload list of matching terms to add
 	 */
 	@OPERATION
-	public void addObsPropertyBinding(Object term) {
-		Matcher m = tripleTermPattern.matcher((String) term);
-		if (m.matches() && !hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
-			String subject = m.group(1);
-			String predicate = m.group(2);
-			String object = m.group(3);
+	public void addObsPropertyBinding(Object[] payload) {
+		List<AddAxiom> changes = new ArrayList<>();
+		for (Object term : payload) {
+			Matcher m = tripleTermPattern.matcher((String) term);
+			if (m.matches() && !hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
+				String subject = m.group(1);
+				String predicate = m.group(2);
+				String object = m.group(3);
 
-			defineObsProperty("rdf", subject, predicate, object);
-			Node[] t = {asNode(subject),asNode(predicate),asNode(object)};
-			OWLAxiom axiom = asOwlAxiom(t);
-			if (axiom != null) {
-				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
-				ontologyManager.applyChange(addAxiom);
+				defineObsProperty("rdf", subject, predicate, object);
+				Node[] t = {asNode(subject),asNode(predicate),asNode(object)};
+				OWLAxiom axiom = asOwlAxiom(t);
+				if (axiom != null) {
+					AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
+					changes.add(addAxiom);
+				}
 			}
 		}
+		if (!changes.isEmpty()) ontologyManager.applyChanges(changes);
 	}
 
 	/**
-	 * Remove one Obs property matching the passed term //TODO Perhaprs replacing it with a list
-	 * @param term Matching term to remove the obs property
+	 * Remove Obs properties matching the passed terms
+	 * @param payload list of matching terms to remove
 	 */
 	@OPERATION
-	public void removeObsPropertyBinding(Object term) {
-		Matcher m = tripleTermPattern.matcher((String) term);
-		if (m.matches()) {
-			if (hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
-				removeObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3));
-				Nodes n = new Nodes(asNode(m.group(1)), asNode(m.group(2)), asNode((m.group(3))));
-				OWLAxiom a = asOwlAxiom(n.getNodeArray());
-				RemoveAxiom removeAxiom = new RemoveAxiom(rootOntology, a);
-				ontologyManager.applyChange(removeAxiom);
+	public void removeObsPropertyBinding(Object[] payload) {
+		List<RemoveAxiom> changes = new ArrayList<>();
+		for (Object term : payload){
+			Matcher m = tripleTermPattern.matcher((String) term);
+			if (m.matches()) {
+				if (hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
+					removeObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3));
+					Nodes n = new Nodes(asNode(m.group(1)), asNode(m.group(2)), asNode((m.group(3))));
+					OWLAxiom a = asOwlAxiom(n.getNodeArray());
+					RemoveAxiom removeAxiom = new RemoveAxiom(rootOntology, a);
+					changes.add(removeAxiom);
+				}
 			}
 		}
+		if (!changes.isEmpty()) ontologyManager.applyChanges(changes);
 	}
 
 	/**
@@ -558,7 +563,7 @@ public class LinkedDataFuSpider extends Artifact {
 			try {
 				 o = getObsProperty("rdf");
 			} catch (Exception e){
-				ontologyManager.applyChanges(changes);
+				if (!changes.isEmpty()) ontologyManager.applyChanges(changes);
 				return;
 			}
 			if (o != null && o.getValues().length == 3) {

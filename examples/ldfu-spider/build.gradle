@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compile group: 'org.hypermedea', name: 'hypermedia-jacamo', version: '0.1'
+    implementation group: 'org.hypermedea', name: 'hypermedea', version: '0.1'
 }
 
 sourceSets {

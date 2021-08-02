@@ -11,7 +11,7 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
     !create_artifact_ldfu(false);
     register(IRI_REGISTER);
     crawl(IRI_CRAWL);
-    removeObsPropertyBinding("rdf(http://www.myexample.org/ExamplePlatform1,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,http://www.w3.org/ns/sosa/Platform)");
+    removeObsPropertyBinding(["rdf(http://www.myexample.org/ExamplePlatform1,http://www.w3.org/1999/02/22-rdf-syntax-ns#type,http://www.w3.org/ns/sosa/Platform)"]);
 	.print("Test Assertion : Unit remove obs property");
 	if (not rdf("http://www.myexample.org/ExamplePlatform1","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Platform")
 	  & not platform(examplePlatform1)) {
