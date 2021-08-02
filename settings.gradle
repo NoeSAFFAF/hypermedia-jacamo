@@ -1,4 +1,4 @@
-rootProject.name = "hypermedia-jacamo"
+rootProject.name = "hypermedea"
 include 'examples:ldfu-spider'
 include 'evaluation'
 

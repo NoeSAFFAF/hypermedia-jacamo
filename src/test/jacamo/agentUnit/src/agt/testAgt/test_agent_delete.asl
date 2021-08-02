@@ -4,7 +4,7 @@
 
 endPointPut("http://localhost:3030/dataLdfu?graph=deleteTest").
 endPointDelete("http://localhost:3030/dataLdfu?graph=deleteTest").
-entryPointCrawl("http://localhost:3030/dataLdfu?graph=deleteTest").
+entryPointGet("http://localhost:3030/dataLdfu?graph=deleteTest").
 
 !testUnit.
 
@@ -24,14 +24,15 @@ entryPointCrawl("http://localhost:3030/dataLdfu?graph=deleteTest").
     put(IRI,OBJECT);
     .
 
-+!testUnit : entryPointCrawl(IRI_CRAWL) <-
++!testUnit : entryPointGet(IRI_GET) <-
     !create_artifact_ldfu(false);
     !create_object_and_put;
-    crawl(IRI_CRAWL);
+    .wait(1000);
+    get(IRI_GET);
     .count(rdf(_, _, _), Count);
     removeAllTripleObsProperties;
     !create_object_and_delete;
-    crawl(IRI_CRAWL);
+    get(IRI_GET);
     .count(rdf(_, _, _), Count2);
     .wait(1000);
 	.print("Test Assertion : Unit delete test");

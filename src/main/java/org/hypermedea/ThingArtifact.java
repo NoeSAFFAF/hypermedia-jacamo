@@ -12,15 +12,23 @@ import ch.unisg.ics.interactions.wot.td.affordances.PropertyAffordance;
 import ch.unisg.ics.interactions.wot.td.clients.TDHttpRequest;
 import ch.unisg.ics.interactions.wot.td.clients.TDHttpResponse;
 import ch.unisg.ics.interactions.wot.td.io.TDGraphReader;
+import ch.unisg.ics.interactions.wot.td.schemas.ArraySchema;
 import ch.unisg.ics.interactions.wot.td.schemas.DataSchema;
+import ch.unisg.ics.interactions.wot.td.schemas.ObjectSchema;
 import ch.unisg.ics.interactions.wot.td.security.APIKeySecurityScheme;
 import ch.unisg.ics.interactions.wot.td.security.SecurityScheme;
 import ch.unisg.ics.interactions.wot.td.vocabularies.TD;
 import ch.unisg.ics.interactions.wot.td.vocabularies.WoTSec;
-import jason.asSyntax.*;
+import jason.asSyntax.ASSyntax;
+import jason.asSyntax.ListTerm;
+import jason.asSyntax.Term;
 import jason.asSyntax.parser.ParseException;
+import org.hypermedea.json.JsonTermWrapper;
+import org.hypermedea.json.TermJsonWrapper;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Optional;
 
 /**
@@ -37,6 +45,8 @@ public class ThingArtifact extends Artifact {
     private ThingDescription td;
 
     private Optional<String> apiKey;
+
+    private Optional<String> basicAuth;
 
     private boolean dryRun;
 
@@ -58,6 +68,7 @@ public class ThingArtifact extends Artifact {
         }
 
         this.apiKey = Optional.empty();
+        this.basicAuth = Optional.empty();
         this.dryRun = false;
     }
 
@@ -102,12 +113,16 @@ public class ThingArtifact extends Artifact {
     /**
      * CArtAgO operation for subscribing to a property of a Thing.
      *
+     * TODO cartago.Artifact already includes an observeProperty operation. Add a 3rd parameter to distinguish the two
+     * TODO replace stubLabel with an outputParam with a ref to the property and override the parent operation
+     *
      * TODO implement WebSub instead of long polling?
      *
      * @param propertyName The property's name (which will also be the name of the observable property created in the Artifact).
+     * @param timer a time interval in ms between each property read
      */
     @OPERATION
-    public void observeProperty(String propertyName, int timer) {
+    public void observeProperty(String propertyName, String stubLabel, int timer) {
         Thread t = new Thread(() -> {
             OpFeedbackParam<Object> output = new OpFeedbackParam<>();
             while (true) {
@@ -115,7 +130,7 @@ public class ThingArtifact extends Artifact {
                 readProperty(propertyName, output);
                 if (hasObsProperty(propertyName)) {
                     try {
-                        if (!getObsProperty(propertyName).equals(output.get())) {
+                        if (!getObsProperty(propertyName).getValue().equals(output.get())) {
                             getObsProperty(propertyName).updateValues(output.get());
                         }
                     } catch (IllegalArgumentException e) {
@@ -190,6 +205,21 @@ public class ThingArtifact extends Artifact {
     }
 
     /**
+     * CArtAgO operation that defines credentials to include in a <code>Authorization</code> header (for HTTP bindings).
+     *
+     * @param username a username
+     * @param password a password
+     */
+    @OPERATION
+    public void setAuthCredentials(String username, String password) {
+        if (username != null && password != null) {
+            String creds = String.format("%s:%s", username, password);
+            String val = Base64.getEncoder().encodeToString(creds.getBytes(StandardCharsets.UTF_8));
+            this.basicAuth = Optional.of(val);
+        }
+    }
+
+    /**
      * CArtAgO operation that sets an authentication token (used with APIKeySecurityScheme).
      *
      * @param token The authentication token.
@@ -219,27 +249,9 @@ public class ThingArtifact extends Artifact {
         return property.get();
     }
 
-    @SuppressWarnings("unchecked")
     private void readPayloadWithSchema(TDHttpResponse response, DataSchema schema, OpFeedbackParam<Object> output) {
-        switch (schema.getDatatype()) {
-            case DataSchema.BOOLEAN:
-                output.set(response.getPayloadAsBoolean());
-                break;
-            case DataSchema.STRING:
-                output.set(response.getPayloadAsString());
-                break;
-            case DataSchema.INTEGER:
-                output.set(response.getPayloadAsInteger());
-                break;
-            case DataSchema.NUMBER:
-                output.set(response.getPayloadAsDouble());
-                break;
-            case DataSchema.OBJECT:
-            case DataSchema.ARRAY:
-                throw new RuntimeException("Not implemented"); // TODO
-            default:
-                break;
-        }
+        Object value = response.getPayloadWithSchema(schema);
+        output.set(new JsonTermWrapper(value).getTerm());
     }
 
     private Optional<TDHttpResponse> executeRequest(InteractionAffordance affordance, String operationType, Optional<DataSchema> schema, Object payload) {
@@ -254,15 +266,14 @@ public class ThingArtifact extends Artifact {
             TDHttpRequest request = new TDHttpRequest(form.get(), operationType);
 
             if (schema.isPresent() && payload != null) {
-                Term p = ASSyntax.parseTerm(payload.toString());
+                Term p = parseCArtAgOObject(payload);
 
-                if (p.isStructure()) {
-                    setObjectPayload(request, schema.get(), (Structure) p);
-                } else if (p.isList()) {
-                    setArrayPayload(request, schema.get(), (ListTerm) p);
-                } else if (p.isString() || p.isAtom() || p.isNumeric()) {
-                    setPrimitivePayload(request, schema.get(), p);
-                } else {
+                TermJsonWrapper w = new TermJsonWrapper(p);
+
+                if (w.isJsonBoolean() || w.isJsonNumber() || w.isJsonString()) setPrimitivePayload(request, schema.get(), w);
+                else if (w.isJsonArray()) setArrayPayload(request, schema.get(), w);
+                else if (w.isJsonObject()) setObjectPayload(request, schema.get(), w);
+                else {
                     failed("Could not detect the type of payload (primitive, object, or array).");
                     return Optional.empty();
                 }
@@ -276,33 +287,20 @@ public class ThingArtifact extends Artifact {
         }
     }
 
-    /**
-     * Set a primitive payload.
-     */
-    TDHttpRequest setPrimitivePayload(TDHttpRequest request, DataSchema schema, Term payload) {
+    TDHttpRequest setPrimitivePayload(TDHttpRequest request, DataSchema schema, TermJsonWrapper w) {
         try {
-            // TODO better handling of booleans?
-            if (payload.isAtom() && payload.equals(Literal.LTrue)) {
-                // Matches to TD BooleanSchema
-                request.setPrimitivePayload(schema, true);
-            } else if (payload.isAtom() && payload.equals(Literal.LFalse)) {
-                // Matches to TD BooleanSchema
-                request.setPrimitivePayload(schema, false);
-                // TODO differentiqte between integers and other numbers
-//            } else if (payload.isNumeric()) {
-//                // Matches to TD IntegerSchema
-//                request.setPrimitivePayload(schema, Long.valueOf(String.valueOf(payload)));
-            } else if (payload.isNumeric()) {
-                // Matches to TD NumberSchema
-                request.setPrimitivePayload(schema, Double.valueOf(String.valueOf(payload)));
-            } else if (payload.isString()) {
-                // Matches to TD StringSchema
-                // TODO allow for atoms as well?
-                request.setPrimitivePayload(schema, payload.toString());
-            } else {
-                failed("Unable to detect the primitive datatype of payload: "
-                        + payload.getClass().getCanonicalName());
+            if (w.isJsonBoolean()) {
+                return request.setPrimitivePayload(schema, w.getJsonBoolean());
+            } else if (w.isJsonNumber()) {
+                Number nb = w.getJsonNumber();
+
+                if (nb instanceof Double) return request.setPrimitivePayload(schema, (double) nb);
+                else if (nb instanceof Long) return request.setPrimitivePayload(schema, (long) nb);
+            } else if (w.isJsonString()) {
+                return request.setPrimitivePayload(schema, w.getJsonString());
             }
+
+            failed("Unable to detect the primitive datatype of payload: " + w.getJsonValue());
         } catch (IllegalArgumentException e) {
             failed(e.getMessage());
         }
@@ -310,35 +308,35 @@ public class ThingArtifact extends Artifact {
         return request;
     }
 
-    /**
-     * Set a TD ObjectSchema payload
-     */
-    TDHttpRequest setObjectPayload(TDHttpRequest request, DataSchema schema, Structure payload) {
+    TDHttpRequest setObjectPayload(TDHttpRequest request, DataSchema schema, TermJsonWrapper w) {
         if (schema.getDatatype() != DataSchema.OBJECT) {
             failed("TD mismatch: illegal arguments, this affordance uses a data schema of type "
                     + schema.getDatatype());
         }
 
-        throw new RuntimeException("Not implemented"); // TODO
+        return request.setObjectPayload((ObjectSchema) schema, w.getJsonObject());
     }
 
-    /**
-     * Set a TD ArraySchema payload
-     */
-    TDHttpRequest setArrayPayload(TDHttpRequest request, DataSchema schema, ListTerm payload) {
+    TDHttpRequest setArrayPayload(TDHttpRequest request, DataSchema schema, TermJsonWrapper w) {
         if (schema.getDatatype() != DataSchema.ARRAY) {
             failed("TD mismatch: illegal arguments, this affordance uses a data schema of type "
                     + schema.getDatatype());
         }
 
-        throw new RuntimeException("Not implemented"); // TODO
+        return request.setArrayPayload((ArraySchema) schema, w.getJsonArray());
     }
 
     private Optional<TDHttpResponse> issueRequest(TDHttpRequest request) {
-        Optional<SecurityScheme> scheme = td.getFirstSecuritySchemeByType(WoTSec.APIKeySecurityScheme);
+        if (apiKey.isPresent()) {
+            Optional<SecurityScheme> scheme = td.getFirstSecuritySchemeByType(WoTSec.APIKeySecurityScheme);
+            if (scheme.isPresent()) request.setAPIKey((APIKeySecurityScheme) scheme.get(), apiKey.get());
+        }
 
-        if (scheme.isPresent() && apiKey.isPresent()) {
-            request.setAPIKey((APIKeySecurityScheme) scheme.get(), apiKey.get());
+        if (basicAuth.isPresent()) {
+            // TODO if future version of wot-td-java includes the whole vocab, replace string with constant
+            Optional<SecurityScheme> scheme = td.getFirstSecuritySchemeByType("BasicSecurityScheme");
+            //if (scheme.isPresent())
+                request.addHeader("Authorization", "Basic " + basicAuth.get());
         }
 
         // Set a header with the id of the operating agent
@@ -358,6 +356,25 @@ public class ThingArtifact extends Artifact {
         }
 
         return Optional.empty();
+    }
+
+    /**
+     * Retrieve a Jason term from a Java object processed by CArtAgO
+     *
+     * @param obj an object holding a Jason term mapped to Java by CArtAgo
+     * @return the original Jason term (if known)
+     */
+    private Term parseCArtAgOObject(Object obj) throws ParseException {
+        if (obj.getClass().isArray()) {
+            ListTerm l = ASSyntax.createList();
+
+            for (Object m : (Object[]) obj) l.add(parseCArtAgOObject(m));
+
+            return l;
+        } else {
+            // TODO take arbitrary objects (cobj_XXX) into account
+            return ASSyntax.parseTerm(obj.toString());
+        }
     }
 
 }

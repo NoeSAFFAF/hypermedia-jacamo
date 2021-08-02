@@ -4,7 +4,10 @@ import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.ObsProperty;
 import cartago.OpFeedbackParam;
+import com.github.jsonldjava.utils.Obj;
 import edu.kit.aifb.datafu.*;
+import edu.kit.aifb.datafu.bindings.BindingFactory;
+import edu.kit.aifb.datafu.bindings.BindingFactoryBasic;
 import edu.kit.aifb.datafu.consumer.impl.BindingConsumerCollection;
 import edu.kit.aifb.datafu.engine.EvaluateProgram;
 import edu.kit.aifb.datafu.io.input.request.EvaluateRequestOrigin;
@@ -26,12 +29,12 @@ import jason.asSyntax.StringTerm;
 import jason.asSyntax.Structure;
 import org.hypermedea.owl.NamingStrategyFactory;
 import org.hypermedea.owl.OWLAxiomWrapper;
-import org.semanticweb.HermiT.Reasoner.ReasonerFactory;
+import org.semanticweb.HermiT.ReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
+import org.semanticweb.owlapi.reasoner.impl.NodeFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.util.*;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -64,7 +67,7 @@ public class LinkedDataFuSpider extends Artifact {
 	 * Manager that listens to changes in the underlying root ontology
 	 * and adds/removes corresponding observable properties.
 	 */
-	private class ObsPropertyManager extends OWLOntologyChangeVisitorAdapter implements OWLOntologyChangeListener {
+	private class ObsPropertyManager implements OWLOntologyChangeListener, OWLOntologyChangeVisitor {
 
 		private final Map<OWLAxiom, ObsProperty> propertiesByAxiom = new HashMap<>();
 		private final Map<OWLOntology, Set<ObsProperty>> propertiesByOntology = new HashMap<>();
@@ -72,9 +75,8 @@ public class LinkedDataFuSpider extends Artifact {
 
 		@Override
 		public void ontologiesChanged(List<? extends OWLOntologyChange> list) {
-			for (OWLOntologyChange c : list) {
-				c.accept(this);
-			}
+			for (OWLOntologyChange c : list) c.accept(this);
+			updateInferredProperties();
 		}
 
 		// FIXME if imported ontologies themselves import other ontologies, do their axioms get defined as ObsProps?
@@ -86,7 +88,6 @@ public class LinkedDataFuSpider extends Artifact {
 
 			Set<ObsProperty> properties = definePropertiesForAxioms(o.getAxioms());
 			propertiesByOntology.put(o, properties);
-			updateInferredProperties();
 		}
 
 		@Override
@@ -94,10 +95,7 @@ public class LinkedDataFuSpider extends Artifact {
 			IRI ontologyIRI = removeImport.getImportDeclaration().getIRI();
 			OWLOntology o = ontologyManager.getOntology(ontologyIRI);
 
-			if (propertiesByOntology.containsKey(o)) {
-				removeProperties(propertiesByOntology.get(o));
-				updateInferredProperties();
-			}
+			if (propertiesByOntology.containsKey(o)) removeProperties(propertiesByOntology.get(o));
 		}
 
 
@@ -131,14 +129,13 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 
 		private void updateInferredProperties() {
-			if (!reasoner.isConsistent()) return;
+			if (!reasoner.isConsistent()) {
+				log("warning: the set of crawled statements is inconsistent...");
+				return;
+			}
 
 			removeProperties(inferredProperties);
 			inferredProperties.clear();
-
-			reasoner.precomputeInferences(InferenceType.CLASS_ASSERTIONS);
-			reasoner.precomputeInferences(InferenceType.OBJECT_PROPERTY_ASSERTIONS);
-			reasoner.precomputeInferences(InferenceType.DATA_PROPERTY_ASSERTIONS);
 
 			List<InferredAxiomGenerator<? extends OWLAxiom>> generators = new ArrayList<>();
 
@@ -148,7 +145,7 @@ public class LinkedDataFuSpider extends Artifact {
 			// TODO are owl:sameAs and owl:differentFrom included?
 
 			for (InferredAxiomGenerator<? extends OWLAxiom> gen : generators) {
-				Set<? extends OWLAxiom> axioms = gen.createAxioms(ontologyManager, reasoner);
+				Set<? extends OWLAxiom> axioms = gen.createAxioms(ontologyManager.getOWLDataFactory(), reasoner);
 				inferredProperties.addAll(definePropertiesForAxioms((Set<OWLAxiom>) axioms));
 			}
 
@@ -279,13 +276,20 @@ public class LinkedDataFuSpider extends Artifact {
 					// or is assumed to be available online/in the file system
 					: ontologyManager.loadOntologyFromOntologyDocument(iri);
 
-			IRI ontologyIRI = o.getOntologyID().getOntologyIRI();
+			if (o.getOntologyID().isAnonymous()) {
+				// set the document's IRI as ontology ID
+				OWLOntologyID id = new OWLOntologyID(iri);
+				ontologyManager.applyChange(new SetOntologyID(o, id));
+			}
+
+			IRI ontologyIRI = o.getOntologyID().getOntologyIRI().get();
 
 			OWLImportsDeclaration decl = dataFactory.getOWLImportsDeclaration(ontologyIRI);
 			AddImport change = new AddImport(rootOntology, decl);
 			ontologyManager.applyChange(change);
 		} catch (OWLOntologyCreationException e) {
-			failed(String.format("Couldn't register ontology <%s>: %s", documentIRI, e.getMessage()));
+			e.printStackTrace();
+			failed(String.format("Couldn't register ontology <%s>", documentIRI));
 			// TODO keep track of stack trace
 			return;
 		}
@@ -358,8 +362,7 @@ public class LinkedDataFuSpider extends Artifact {
 			e.printStackTrace();
 		}
 
-		//if (hasObsProperty("rdf")) removeObsProperty("rdf"); // TODO only if crawl succeeded
-
+		//if (hasObsProperty("rdf")) removeObsProperty("rdf"); // TODO only if crawl succeeded FIXME does not remove properties with parameters
 		// TODO clear axioms in root ontology?
 
 		definePropertiesForBindings(this.triples.getCollection());
@@ -367,7 +370,9 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	/**
-	 * performs a GET request and updates the belief base as the result.
+	 * Performs a GET request and updates the belief base as the result.
+	 *
+	 * @param originURI The entrypoint for get request
 	 */
 	@OPERATION
 	public void get(String originURI) {
@@ -398,7 +403,10 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	/**
-	 * performs a PUT request with the given input triples, of the form [rdf(S, P, O), rdf(S, P, O), ...].
+	 * Performs a PUT request with the given input triples, of the form [rdf(S, P, O), rdf(S, P, O), ...].
+	 *
+	 * @param originURI The entrypoint for PUT request
+	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
 	 */
 	@OPERATION
 	public void put(String originURI, Object[] payload) {
@@ -432,6 +440,13 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+
+	/**
+	 * Performs a POST request with the given input triples, of the form [rdf(S, P, O), rdf(S, P, O), ...].
+	 *
+	 * @param originURI The entrypoint for POST request
+	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
+	 */
 	@OPERATION
 	public void post(String originURI, Object[] payload) {
 		try {
@@ -459,6 +474,12 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+	/**
+	 * Performs a DELETE request with the given input triples, of the form [rdf(S, P, O), rdf(S, P, O), ...].
+	 *
+	 * @param originURI The entrypoint for DELETE request
+	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
+	 */
 	@OPERATION
 	public void delete(String originURI, Object[] payload) {
 		try {
@@ -486,6 +507,32 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+	/**
+	 * Add one Obs property matching the passed term //TODO Perhaprs replacing it with a list of terms like in put
+	 * @param term
+	 */
+	@OPERATION
+	public void addObsPropertyBinding(Object term) {
+		Matcher m = tripleTermPattern.matcher((String) term);
+		if (m.matches() && !hasObsPropertyByTemplate("rdf",m.group(1),m.group(2),m.group(3))){
+			String subject = m.group(1);
+			String predicate = m.group(2);
+			String object = m.group(3);
+
+			defineObsProperty("rdf", subject, predicate, object);
+			Node[] t = {asNode(subject),asNode(predicate),asNode(object)};
+			OWLAxiom axiom = asOwlAxiom(t);
+			if (axiom != null) {
+				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
+				ontologyManager.applyChange(addAxiom);
+			}
+		}
+	}
+
+	/**
+	 * Remove one Obs property matching the passed term //TODO Perhaprs replacing it with a list
+	 * @param term Matching term to remove the obs property
+	 */
 	@OPERATION
 	public void removeObsPropertyBinding(Object term) {
 		Matcher m = tripleTermPattern.matcher((String) term);
@@ -500,13 +547,18 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
+	/**
+	 * Remove all Obs property originated from triples
+	 */
 	@OPERATION
 	public void removeAllObsPropertiesBinding(){
+		List<RemoveAxiom> changes = new ArrayList<>();
 		while (true) {
 			ObsProperty o = null;
 			try {
 				 o = getObsProperty("rdf");
 			} catch (Exception e){
+				ontologyManager.applyChanges(changes);
 				return;
 			}
 			if (o != null && o.getValues().length == 3) {
@@ -515,7 +567,7 @@ public class LinkedDataFuSpider extends Artifact {
 				OWLAxiom a = asOwlAxiom(n.getNodeArray());
 				if (a != null) {
 					RemoveAxiom removeAxiom = new RemoveAxiom(rootOntology, a);
-					ontologyManager.applyChange(removeAxiom);
+					changes.add(removeAxiom);
 				}
 			}
 		}
@@ -534,7 +586,6 @@ public class LinkedDataFuSpider extends Artifact {
 			ObsProperty p = defineObsProperty("rdf", subject, predicate, object);
 			properties.add(p);
 		}
-
 		return properties;
 	}
 
@@ -646,15 +697,17 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 	private void addCollectionToOnt(Collection<Binding> bindingCollection){
+		List<OWLOntologyChange> changes = new ArrayList<>();
 		for (Binding binding : bindingCollection) {
 			Node[] st = binding.getNodes().getNodeArray();
 			OWLAxiom axiom = asOwlAxiom(st);
 
 			if (axiom != null) {
 				AddAxiom addAxiom = new AddAxiom(rootOntology, axiom);
-				ontologyManager.applyChange(addAxiom);
+				changes.add(addAxiom);
 			}
 		}
+		ontologyManager.applyChanges(changes);
 	}
 
 	private Object asBuiltIn(Node n) {
