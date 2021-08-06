@@ -1,0 +1,5 @@
+mas ldfu_mas {
+    agent t_get_throw_errmsg
+
+    asl-path: src/agt/base, src/agt/testAgt/throw_fb
+}

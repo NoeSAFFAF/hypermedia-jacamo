@@ -11,9 +11,6 @@ plugins {
 version '0.1'
 group   'org.hypermedea'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 repositories {
     mavenCentral()
     // artifact repository for JaCaMo-related project
@@ -67,6 +64,29 @@ task testAgt (type: JavaExec, dependsOn: 'classes') {
     }
     main = 'jacamo.infra.JaCaMoLauncher'
     args 'test.jcm'
+    workingDir = 'src/test/jacamo/agentUnit/'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task testOntAgt (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the JaCaMo application for Test'
+    doFirst {
+        mkdir 'log'
+    }
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'test-owl.jcm'
+    workingDir = 'src/test/jacamo/agentUnit/'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+
+task testErrAgt (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the JaCaMo application for Test'
+    doFirst {
+        mkdir 'log'
+    }
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'test_err.jcm'
     workingDir = 'src/test/jacamo/agentUnit/'
     classpath sourceSets.main.runtimeClasspath
 }

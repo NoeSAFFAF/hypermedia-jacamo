@@ -1,0 +1,7 @@
+mas ldfu_mas {
+
+    agent t_rdf_owl_register
+    agent t_rdf_owl_register2
+
+    asl-path: src/agt/base, src/agt/owl
+}

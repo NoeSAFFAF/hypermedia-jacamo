@@ -7,10 +7,12 @@
 
 
 ex:ExamplePlatform1 rdf:type c_sosa:Platform ;
-                         rdfs:label "ExamplePlatform1" .
+                         rdfs:label "ExamplePlatform1" ;
+                         c_sosa:hasWarningMsg "Watch out!" .
 
 ex:ExampleSensor1 rdf:type c_sosa:Sensor ;
-                      sosa:isHostedBy ex:ExamplePlateform1 .
+                      sosa:isHostedBy ex:ExamplePlateform1 ;
+                      c_sosa:observes ex:ExampleSensor2 .
 
 ex:ExampleSensor2 rdf:type c_sosa:Sensor ;
                       sosa:isHostedBy ex:ExamplePlateform2 ;

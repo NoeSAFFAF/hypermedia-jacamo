@@ -18,3 +18,10 @@
            rdfs:subClassOf :System ;
            rdfs:label "Sensor"@en .
 
+:observes a owl:ObjectProperty ;
+             rdfs:label "observes"@en .
+
+:hasWarningMsg a owl:DatatypeProperty ;
+             rdfs:label "hasValue"@en ;
+             rdfs:range rdfs:Literal .
+

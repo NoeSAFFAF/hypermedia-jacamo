@@ -4,10 +4,7 @@ import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.ObsProperty;
 import cartago.OpFeedbackParam;
-import com.github.jsonldjava.utils.Obj;
 import edu.kit.aifb.datafu.*;
-import edu.kit.aifb.datafu.bindings.BindingFactory;
-import edu.kit.aifb.datafu.bindings.BindingFactoryBasic;
 import edu.kit.aifb.datafu.consumer.impl.BindingConsumerCollection;
 import edu.kit.aifb.datafu.engine.EvaluateProgram;
 import edu.kit.aifb.datafu.io.input.request.EvaluateRequestOrigin;
@@ -34,7 +31,6 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
 import org.semanticweb.owlapi.reasoner.OWLReasonerFactory;
-import org.semanticweb.owlapi.reasoner.impl.NodeFactory;
 import org.semanticweb.owlapi.reasoner.structural.StructuralReasonerFactory;
 import org.semanticweb.owlapi.util.*;
 import org.semanticweb.owlapi.vocab.OWLRDFVocabulary;
@@ -78,7 +74,6 @@ public class LinkedDataFuSpider extends Artifact {
 			for (OWLOntologyChange c : list) c.accept(this);
 			updateInferredProperties();
 		}
-
 		// FIXME if imported ontologies themselves import other ontologies, do their axioms get defined as ObsProps?
 
 		@Override
@@ -130,7 +125,7 @@ public class LinkedDataFuSpider extends Artifact {
 
 		private void updateInferredProperties() {
 			if (!reasoner.isConsistent()) {
-				log("warning: the set of crawled statements is inconsistent...");
+				log("Warning: the set of crawled statements is inconsistent...");
 				return;
 			}
 
@@ -141,6 +136,7 @@ public class LinkedDataFuSpider extends Artifact {
 
 			generators.add(new InferredClassAssertionAxiomGenerator());
 			generators.add(new InferredPropertyAssertionGenerator());
+
 
 			// TODO are owl:sameAs and owl:differentFrom included?
 
@@ -153,6 +149,9 @@ public class LinkedDataFuSpider extends Artifact {
 				Atom annotation = ASSyntax.createAtom("inferred");
 				p.addAnnot(annotation);
 			}
+
+			//Set<? extends OWLAxiom> axioms = gen.createAxioms(ontologyManager.getOWLDataFactory(), reasoner);
+			//for (OWLAxiom axiom : ontologyManager.get)
 		}
 	}
 
@@ -412,16 +411,12 @@ public class LinkedDataFuSpider extends Artifact {
 
 			Set<Nodes> triples = new HashSet<>();
 			for (Object term : payload) {
-				// terms are exposed as strings to CArtAgO artifacts
-				//Case 1, object is of type rdf(S, P, O)
 				Matcher m = tripleTermPattern.matcher((String) term);
 				if (m.matches()) {
 					Nodes n = new Nodes(asNode(m.group(1)), asNode(m.group(2)), asNode((m.group(3))));
 					System.out.println(n);
 					triples.add(n);
 				}
-
-				//Case 2,
 			}
 			req.setTriplesPayload(triples);
 
@@ -599,7 +594,7 @@ public class LinkedDataFuSpider extends Artifact {
 
 		String name = w.getPropertyName();
 		Object[] args = w.getPropertyArguments();
-
+		IRI[] iris = w.getPropertyArgumentsIRI();
 		ObsProperty p = null;
 
 		if (args.length == 1) p = defineObsProperty(name, args[0]);
@@ -613,6 +608,26 @@ public class LinkedDataFuSpider extends Artifact {
 				Structure annotation = ASSyntax.createStructure(PREDICATE_IRI_FUNCTOR, t);
 				p.addAnnot(annotation);
 			}
+
+			if (iris != null && iris.length == 2 && iris[0]!=null){
+				StringTerm t = ASSyntax.createString(iris[0]);
+				Structure annotation = ASSyntax.createStructure("s_uri", t);
+				p.addAnnot(annotation);
+			}
+
+
+			if (iris != null && iris.length == 2 && iris[1]!=null){
+				StringTerm t = ASSyntax.createString(iris[1]);
+				Structure annotation = ASSyntax.createStructure("o_uri", t);
+				p.addAnnot(annotation);
+			}
+
+			if (iris != null && iris.length == 1 && iris[0]!=null){
+				StringTerm t = ASSyntax.createString(iris[0]);
+				Structure annotation = ASSyntax.createStructure("o_uri", t);
+				p.addAnnot(annotation);
+			}
+
 			return p;
 		} else {
 			return null;
@@ -656,7 +671,6 @@ public class LinkedDataFuSpider extends Artifact {
 
 	private OWLAxiom asOwlAxiom(Node[] t) {
 		if (t.length != 3) return null;
-
 		if (t[1].getLabel().equals(RDF_TYPE)) {
 			OWLClass c = dataFactory.getOWLClass(IRI.create(t[2].getLabel()));
 
@@ -665,6 +679,7 @@ public class LinkedDataFuSpider extends Artifact {
 
 				return dataFactory.getOWLClassAssertionAxiom(c, i);
 			}
+
 		} else if (t[2] instanceof Literal) {
 			OWLDataProperty p = dataFactory.getOWLDataProperty(IRI.create(t[1].getLabel()));
 
@@ -686,6 +701,7 @@ public class LinkedDataFuSpider extends Artifact {
 			OWLObjectProperty p = dataFactory.getOWLObjectProperty(IRI.create(t[1].getLabel()));
 
 			if (isRegistered(p)) {
+
 				OWLNamedIndividual s = dataFactory.getOWLNamedIndividual(IRI.create(t[0].getLabel()));
 				OWLNamedIndividual o = dataFactory.getOWLNamedIndividual(IRI.create(t[2].getLabel()));
 

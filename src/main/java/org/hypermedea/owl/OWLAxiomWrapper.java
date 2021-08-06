@@ -29,6 +29,8 @@ public class OWLAxiomWrapper {
 
         private Object[] arguments = new Object[0];
 
+        private IRI[] argumentsIRI;
+
         public String getName() {
             return name;
         }
@@ -40,6 +42,8 @@ public class OWLAxiomWrapper {
         public Object[] getArguments() {
             return arguments;
         }
+
+        public IRI[] getArgumentsIRI() { return argumentsIRI; }
 
         @Override
         public void visit(OWLDeclarationAxiom axiom) {
@@ -64,6 +68,7 @@ public class OWLAxiomWrapper {
                 name = getEntityName(c.asOWLClass());
 
                 Atom indiv = ASSyntax.createAtom(getEntityName(i.asOWLNamedIndividual()));
+                argumentsIRI = new IRI[] {IRI.create(i.toStringID())};
                 arguments = new Object[] { indiv };
             }
         }
@@ -80,7 +85,7 @@ public class OWLAxiomWrapper {
 
                 Atom subject = ASSyntax.createAtom(getEntityName(s.asOWLNamedIndividual()));
                 Atom object = ASSyntax.createAtom(getEntityName(o.asOWLNamedIndividual()));
-
+                argumentsIRI = new IRI[] { IRI.create(s.toStringID()), IRI.create(o.toStringID())};
                 arguments = new Object[] { subject, object };
             } else {
                 // TODO warn
@@ -92,14 +97,13 @@ public class OWLAxiomWrapper {
             OWLIndividual s = axiom.getSubject();
             OWLDataPropertyExpression p = axiom.getProperty();
             OWLLiteral o = axiom.getObject();
-
-            if (!s.isNamed() && !p.isAnonymous()) {
+            if (s.isNamed() && !p.isAnonymous()) {
                 iri = p.asOWLDataProperty().getIRI();
                 name = getEntityName(p.asOWLDataProperty());
 
                 Atom subject = ASSyntax.createAtom(getEntityName(s.asOWLNamedIndividual()));
                 String object = o.getLiteral(); // TODO language string and datatype as annotations?
-
+                argumentsIRI = new IRI[] { IRI.create(s.toStringID())};
                 arguments = new Object[] { subject, object };
             } else {
                 // TODO warn
@@ -149,6 +153,12 @@ public class OWLAxiomWrapper {
     public Object[] getPropertyArguments() {
         return visitor.getArguments();
     }
+
+    /**
+     * Returns the property arguments' IRIs
+     * @return Property arguments' IRIs
+     */
+    public IRI[] getPropertyArgumentsIRI() { return visitor.getArgumentsIRI();}
 
     @Override
     public boolean equals(Object o) {
