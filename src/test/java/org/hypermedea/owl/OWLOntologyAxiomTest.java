@@ -17,6 +17,7 @@ import java.net.URL;
 
 public class OWLOntologyAxiomTest {
 
+    //TODO Either add test or remove
     private final OWLOntologyManager ontologyManager = OWLManager.createOWLOntologyManager();
     private final OWLOntology ontology;
 

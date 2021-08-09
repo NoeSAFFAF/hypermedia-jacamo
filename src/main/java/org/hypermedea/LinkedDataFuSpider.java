@@ -332,15 +332,22 @@ public class LinkedDataFuSpider extends Artifact {
 		else b.set(reasoner.getUnsatisfiableClasses().getEntitiesMinusBottom().size() == 0);
 	}
 
+
+	@OPERATION
+	public void crawl(String originURI) {
+		crawl(originURI, null);
+	}
+
 	/**
 	 * External action to execute the Linked Data program and notifies agent with collected triples and their unary
 	 * binary axioms according to the already registered ontologies. Can accept local file and can have the inferred
 	 * axioms (Class assertion only) of the unary/binary beliefs.
 	 *
 	 * @param originURI The entrypoint for the data graph file to crawl, can be a local path if the option local is activated
+	 * @param code_status An optional parameter to get the code status in case of HTTP failure
 	 */
 	@OPERATION
-	public void crawl(String originURI) {
+	public void crawl(String originURI, OpFeedbackParam<Object> code_status) {
 		if (program == null) return;
 
 		EvaluateProgramConfig config = new EvaluateProgramConfig();
@@ -357,6 +364,9 @@ public class LinkedDataFuSpider extends Artifact {
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			if (code_status != null){
+				//TODO add http status code as op feedback param
+			}
 		}
 
 		//if (hasObsProperty("rdf")) removeObsProperty("rdf"); // TODO only if crawl succeeded FIXME does not remove properties with parameters
@@ -366,12 +376,18 @@ public class LinkedDataFuSpider extends Artifact {
 		addCollectionToOnt(this.triples.getCollection());
 	}
 
+	@OPERATION
+	public void get(String originURI){
+		get(originURI, null);
+	}
+
 	/**
 	 * Performs a GET request and updates the belief base as the result.
 	 * @param originURI The entrypoint for get request
+	 * @param code_status An optional parameter to get the code status in case of HTTP failure
 	 */
 	@OPERATION
-	public void get(String originURI) {
+	public void get(String originURI, OpFeedbackParam<String> code_status) {
 		InputOrigin origin = asOrigin(originURI);
 
 		if (origin == null || !(origin instanceof RequestOrigin)) return;
@@ -385,6 +401,9 @@ public class LinkedDataFuSpider extends Artifact {
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			if (code_status != null){
+				//TODO add http status code as op feedback param
+			}
 			return;
 		}
 
@@ -398,6 +417,12 @@ public class LinkedDataFuSpider extends Artifact {
 		addCollectionToOnt(triples.getCollection());
 	}
 
+	@OPERATION
+	public void put(String originURI, Object[] payload){
+		put(originURI,payload,null);
+	}
+
+
 	/**
 	 * Performs a PUT request with the given input triples, of the form [rdf(S, P, O), rdf(S, P, O), ...].
 	 *
@@ -405,7 +430,7 @@ public class LinkedDataFuSpider extends Artifact {
 	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
 	 */
 	@OPERATION
-	public void put(String originURI, Object[] payload) {
+	public void put(String originURI, Object[] payload, OpFeedbackParam<String> code_status) {
 		try {
 			RequestOrigin req = new RequestOrigin(new URI(originURI), Request.Method.PUT);
 
@@ -425,7 +450,9 @@ public class LinkedDataFuSpider extends Artifact {
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			// TODO recover or ignore?
+			if (code_status != null){
+				//TODO add http status code as op feedback param
+			}
 		} catch (URISyntaxException e) {
 			// TODO throw it to make operation fail?
 			e.printStackTrace();
@@ -440,7 +467,7 @@ public class LinkedDataFuSpider extends Artifact {
 	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
 	 */
 	@OPERATION
-	public void post(String originURI, Object[] payload) {
+	public void post(String originURI, Object[] payload, OpFeedbackParam<String> code_status) {
 		try {
 			RequestOrigin req = new RequestOrigin(new URI(originURI), Request.Method.POST);
 
@@ -459,11 +486,18 @@ public class LinkedDataFuSpider extends Artifact {
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			// TODO recover or ignore?
+			if (code_status != null){
+				//TODO add http status code as op feedback param
+			}
 		} catch (URISyntaxException e) {
 			// TODO throw it to make operation fail?
 			e.printStackTrace();
 		}
+	}
+
+	@OPERATION
+	public void delete(String originURI, Object[] payload){
+		delete(originURI, payload, null);
 	}
 
 	/**
@@ -473,7 +507,7 @@ public class LinkedDataFuSpider extends Artifact {
 	 * @param payload list of rdf object formed in Jason (should be of form [rdf(S, P, O), rdf(S, P, O), ...].
 	 */
 	@OPERATION
-	public void delete(String originURI, Object[] payload) {
+	public void delete(String originURI, Object[] payload, OpFeedbackParam<String> code_status) {
 		try {
 			RequestOrigin req = new RequestOrigin(new URI(originURI), Request.Method.DELETE);
 
@@ -492,7 +526,9 @@ public class LinkedDataFuSpider extends Artifact {
 			eval.shutdown();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-			// TODO recover or ignore?
+			if (code_status != null){
+				//TODO add http status code as op feedback param
+			}
 		} catch (URISyntaxException e) {
 			// TODO throw it to make operation fail?
 			e.printStackTrace();
@@ -615,7 +651,6 @@ public class LinkedDataFuSpider extends Artifact {
 				p.addAnnot(annotation);
 			}
 
-
 			if (iris != null && iris.length == 2 && iris[1]!=null){
 				StringTerm t = ASSyntax.createString(iris[1]);
 				Structure annotation = ASSyntax.createStructure("o_uri", t);
@@ -639,7 +674,7 @@ public class LinkedDataFuSpider extends Artifact {
 		Set<ObsProperty> properties = new HashSet<>();
 		for (OWLAxiom axiom : axioms) {
 			ObsProperty p = definePropertyForAxiom(axiom);
-			if (p != null){
+			if (p != null ){
 				properties.add(p);
 			}
 		}
