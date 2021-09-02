@@ -10,9 +10,6 @@ apply plugin: 'java'
 version '0.1'
 group   'org.jacamo'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
 repositories {
     mavenCentral()
     maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
@@ -22,12 +19,14 @@ repositories {
 
 dependencies {
     implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
+    implementation group: 'edu.kit.aifb.linkeddatafu', name: 'linked-data-fu-standalone', version: '0.9.12'
     implementation group: 'org.hypermedea', name: 'hypermedea', version: '0.1'
 }
 
 sourceSets {
     main {
         java {
+            srcDir 'src/main'
             srcDir 'src/env'
             srcDir 'src/agt'
         }
@@ -37,7 +36,8 @@ sourceSets {
     }
 }
 
-task runAgentEvaluation (type: JavaExec, dependsOn: 'classes') {
+//Agent evaluation
+task run_Agent (type: JavaExec, dependsOn: 'classes') {
     group ' JaCaMo'
     description 'runs the JaCaMo application'
     doFirst {
@@ -45,6 +45,43 @@ task runAgentEvaluation (type: JavaExec, dependsOn: 'classes') {
     }
     main 'jacamo.infra.JaCaMoLauncher'
     args 'execution_time_test.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+//Ldfu
+task run_LdfuGraphCrawl (type: JavaExec, dependsOn: 'classes') {
+    group 'JavaLdfu'
+    description 'runs the java application'
+    main = 'graphLauncher.LdfuGraphCrawlEvaluation'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task run_LdfuGraphCrawlMono (type: JavaExec, dependsOn: 'classes') {
+    group 'JavaLdfu'
+    description 'runs the java application'
+    main = 'graphLauncher.LdfuGraphCrawlMonothreadEvaluation'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task run_LdfuSingleCrawl(type: JavaExec, dependsOn: 'classes') {
+    group 'JavaLdfu'
+    description 'runs the java application'
+    main = 'singletonLauncher.LdfuSingleCrawlEvaluation'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+
+task run_LdfuSingleCrawlMono(type: JavaExec, dependsOn: 'classes') {
+    group 'JavaLdfu'
+    description 'runs the java application'
+    main = 'singletonLauncher.LdfuSingleCrawlMonothreadEvaluation'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+task run_LdfuSingleGet (type: JavaExec, dependsOn: 'classes') {
+    group 'JavaLdfu'
+    description 'runs the java application'
+    main = 'launcher.LdfuSingleGetEvaluation'
     classpath sourceSets.main.runtimeClasspath
 }
 

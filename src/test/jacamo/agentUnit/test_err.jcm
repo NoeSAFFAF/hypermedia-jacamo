@@ -1,5 +1,7 @@
 mas ldfu_mas {
-    agent t_get_throw_errmsg
+    agent t_crawl_err_file_status
+    agent t_crawl_err_http_status
+    agent t_get_err_http_status
 
-    asl-path: src/agt/base, src/agt/testAgt/throw_fb
+    asl-path: src/agt/base, src/agt/testAgt/error_state
 }

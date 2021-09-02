@@ -3,7 +3,7 @@
  */
 
 entryPointGet("http://localhost:3030/dataLdfu?graph=evaluationTest").
-entryPointRegister("https://www.w3.org/ns/sosa/").
+
 
 !testUnit.
 
@@ -21,12 +21,12 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
     focus(ART_ID);
     .
 
-+!testUnit : entryPointRegister(IRI_REGISTER) <-
++!testUnit : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure get with onto test");
-	register(IRI_REGISTER)
+	.print("Test : Unit measure get test");
 	!profileWithCPUArtifact;
+	//!start;
 	.
 
 +!profileWithCPUArtifact : true <-
@@ -36,12 +36,10 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
             get(IRI);
             endTimeMeasure(TIME);
             .print("Get exec time : ",TIME);
-            .count(sensor(_), CountSensor);
-            .print("found ", CountSensor, " sensors.");
             removeAllObsPropertiesBinding;
         };
      };
-     writeEvaluationReport("agentGetDataWithOnto.csv");
+     writeEvaluationReport("agentGetSingleSS.csv");
      .
 
 { include("$jacamoJar/templates/common-cartago.asl") }

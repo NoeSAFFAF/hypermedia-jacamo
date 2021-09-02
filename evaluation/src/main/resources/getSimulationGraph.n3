@@ -5,8 +5,11 @@
 @prefix httpm: <http://www.w3.org/2011/http-methods#> .
 @prefix sg: <http://www.semanticweb.org/noesaffaf/simulatedGraph#> .
 
+# Navigational rules
 
-{   ?resource sg:hasChild ?otherResource .  }
+{
+    ?resource sg:hasChild ?otherResource .
+}
 =>
 {
     [] a http:Request ;

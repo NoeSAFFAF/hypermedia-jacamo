@@ -1,0 +1,21 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sg: <http://www.semanticweb.org/noesaffaf/simulatedGraph#> .
+
+<http://www.semanticweb.org/noesaffaf/simulatedGraph#> rdf:type owl:Ontology .
+
+sg:Node rdf:type rdfs:Class, owl:Class ;
+      rdfs:comment "A web node identified by its URI"@en ;
+      rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedGraph#> ;
+      rdfs:label "Node"@en .
+
+
+sg:hasChild rdf:type rdf:Property, owl:ObjectProperty ;
+               rdfs:domain :Node ;
+               rdfs:range :Node ;
+               rdfs:comment "Connects two nodes"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedGraph#> ;
+               rdfs:label "hasChild"@en .

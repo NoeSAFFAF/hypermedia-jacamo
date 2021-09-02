@@ -2,10 +2,9 @@
  * @author Noé SAFFAF
  */
 
-entryPointCrawl("http://localhost:3030/dataLdfu?graph=evaluationTest").
-entryPointRegister("https://www.w3.org/ns/sosa/").
+entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 
-!testUnit.
+!start.
 
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
@@ -21,28 +20,43 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
     focus(ART_ID);
     .
 
-+!testUnit : entryPointRegister(IRI_REGISTER) <-
++!start : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure get with onto test");
-	register(IRI_REGISTER)
+	.print("Test Unit : Measure get in simulatedGraph");
+	register("onto/simulatedGraph.ttl");
 	!profileWithCPUArtifact;
 	.
+
 
 +!profileWithCPUArtifact : true <-
      for (.range(I,1,100)){
         for (entryPointCrawl(IRI)){
-            startTimeMeasure;
+            !startMeasurement;
             crawl(IRI);
-            endTimeMeasure(TIME);
-            .print("Get exec time : ",TIME);
-            .count(sensor(_), CountSensor) ;
-            .print("found ", CountSensor, " sensors.");
-            removeAllObsPropertiesBinding;
+            !endMeasurement;
         };
      };
-     writeEvaluationReport("agentCrawlDataWithOnto.csv");
-     .
+     !count;
+     writeEvaluationReport("agentCrawlRichGraphWithOnto.csv");
+.
+
+
++!startMeasurement : true <-
+    .print("Start measuring time");
+    startTimeMeasure;
+.
+
++!endMeasurement : true <-
+    endTimeMeasure(TIME);
+    .print("Get exec time : ",TIME);
+    removeAllObsPropertiesBinding;
+.
+
++!count : true <-
+    .count(rdf(_,"http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.semanticweb.org/noesaffaf/simulatedGraph#Node"),COUNT);
+    .print("We have found : ", COUNT);
+.
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }

@@ -1,0 +1,11 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ss:  <http://www.semanticweb.org/noesaffaf/simulatedSingleton#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.semanticweb.org/noesaffaf/simulatedSingleton#> rdf:type owl:Ontology .
+
+
+ss:hasChild rdf:type rdf:Property, owl:ObjectProperty .
+ss:Node rdf:type rdfs:Class, owl:Class .
+ss:NotRelevantResource rdf:type rdfs:Class, owl:Class .

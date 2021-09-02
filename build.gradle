@@ -68,18 +68,6 @@ task testAgt (type: JavaExec, dependsOn: 'classes') {
     classpath sourceSets.main.runtimeClasspath
 }
 
-task testOntAgt (type: JavaExec, dependsOn: 'classes') {
-    description 'runs the JaCaMo application for Test'
-    doFirst {
-        mkdir 'log'
-    }
-    main = 'jacamo.infra.JaCaMoLauncher'
-    args 'test-owl.jcm'
-    workingDir = 'src/test/jacamo/agentUnit/'
-    classpath sourceSets.main.runtimeClasspath
-}
-
-
 task testErrAgt (type: JavaExec, dependsOn: 'classes') {
     description 'runs the JaCaMo application for Test'
     doFirst {

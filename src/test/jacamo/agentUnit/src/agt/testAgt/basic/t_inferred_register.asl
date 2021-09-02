@@ -2,6 +2,10 @@
  * @author Noé SAFFAF
  */
 
+
+/**
+ * @author Noé SAFFAF
+ */
 entryPointRegister("ttl/custom_sosa_n.ttl").
 
 !testUnit.

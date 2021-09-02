@@ -1,0 +1,10 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sg: <http://www.semanticweb.org/noesaffaf/simulatedGraph#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.semanticweb.org/noesaffaf/simulatedGraph#> rdf:type owl:Ontology .
+
+
+sg:hasChild rdf:type rdf:Property, owl:ObjectProperty .
+sg:Node rdf:type rdfs:Class, owl:Class .

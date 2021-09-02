@@ -20,5 +20,5 @@ mas ldfu_mas {
      * get/put/post/delete agents do a http request to a linked data platform server, the entry/end point is set to a localhost on port 3030,
      * Tests were conducted using apache jena fuseki sparql server, unless you setup the server, those test wont work as expected.
      */
-    asl-path: src/agt/base, src/agt/testAgt
+    asl-path: src/agt/base, src/agt/testAgt/basic, src/agt/testAgt/fuseki
 }

@@ -3,8 +3,16 @@
  */
 
 entryPointCrawl("http://localhost:3030/dataLdfu?graph=evaluationTest").
+entryPointRegister("https://www.w3.org/ns/sosa/").
 
 !testUnit.
+
++!create_artifact_ldfu : true <-
+     .my_name(NAME);
+     .concat("ldfu_artifact_",NAME, NAME_ART);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3",true],ART_ID);
+     focus(ART_ID);
+     .
 
 +!create_artifact_cpu : true <-
     .my_name(NAME);
@@ -13,17 +21,11 @@ entryPointCrawl("http://localhost:3030/dataLdfu?graph=evaluationTest").
     focus(ART_ID);
     .
 
-+!create_artifact_ldfu : true <-
-     .my_name(NAME);
-     .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
-     focus(ART_ID);
-     .
-
-+!testUnit : true <-
++!testUnit : entryPointRegister(IRI_REGISTER) <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure crawl test");
+	.print("Test : Unit measure get with onto test");
+	register(IRI_REGISTER)
 	!profileWithCPUArtifact;
 	.
 
@@ -33,13 +35,14 @@ entryPointCrawl("http://localhost:3030/dataLdfu?graph=evaluationTest").
             startTimeMeasure;
             crawl(IRI);
             endTimeMeasure(TIME);
-            .print("Crawl exec time : ",TIME);
+            .print("Get exec time : ",TIME);
+            .count(sensor(_), CountSensor) ;
+            .print("found ", CountSensor, " sensors.");
             removeAllObsPropertiesBinding;
         };
      };
-     writeEvaluationReport("agentCrawlData.csv");
+     writeEvaluationReport("agentCrawlSingleSSWithOntoInff.csv");
      .
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
-

@@ -2,8 +2,8 @@
  * @author Noé SAFFAF
  */
 
-entryPointGet("http://localhost:3030/dataLdfu?graph=evaluationTest").
-
+entryPointCrawl("http://localhost:3030/simulatedSingleton?graph=NodeID_1").
+entryPointRegister("https://www.w3.org/ns/sosa/").
 
 !testUnit.
 
@@ -21,25 +21,27 @@ entryPointGet("http://localhost:3030/dataLdfu?graph=evaluationTest").
     focus(ART_ID);
     .
 
-+!testUnit : true <-
++!testUnit : entryPointRegister(IRI_REGISTER) <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure get test");
+	.print("Test : Unit measure get with onto test");
+	register(IRI_REGISTER)
 	!profileWithCPUArtifact;
-	//!start;
 	.
 
 +!profileWithCPUArtifact : true <-
      for (.range(I,1,100)){
-        for (entryPointGet(IRI)){
+        for (entryPointCrawl(IRI)){
             startTimeMeasure;
-            get(IRI);
+            crawl(IRI);
             endTimeMeasure(TIME);
             .print("Get exec time : ",TIME);
+            .count(sensor(_), CountSensor) ;
+            .print("found ", CountSensor, " sensors.");
             removeAllObsPropertiesBinding;
         };
      };
-     writeEvaluationReport("agentGetData.csv");
+     writeEvaluationReport("agentCrawlSingleWithOnto.csv");
      .
 
 { include("$jacamoJar/templates/common-cartago.asl") }
