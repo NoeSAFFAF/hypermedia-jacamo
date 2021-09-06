@@ -9,7 +9,7 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3"],ART_ID);
      focus(ART_ID);
      .
 

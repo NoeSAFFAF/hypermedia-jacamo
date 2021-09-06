@@ -9,7 +9,7 @@ entryPointGet("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3"],ART_ID);
      focus(ART_ID);
      .
 
@@ -34,7 +34,7 @@ entryPointGet("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
             !startMeasurement;
             +hasMadeRequest(IRI);
             get(IRI);
-            while (rdf(_,"http://www.semanticweb.org/noesaffaf/simulatedGraph#hasChild",IRI_CHILD) & not hasMadeRequest(IRI_CHILD)) {
+            while (rdf(_,"http://www.semanticweb.org/noesaffaf/simulatedRichGraph#hasChild",IRI_CHILD) & not hasMadeRequest(IRI_CHILD)) {
                 +hasMadeRequest(IRI_CHILD);
                 get(IRI_CHILD);
             }

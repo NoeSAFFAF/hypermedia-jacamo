@@ -34,9 +34,17 @@ public class LdfuGraphCrawlEvaluation {
     private static final String COLLECT_QUERY = "construct { ?s ?p ?o . } where { ?s ?p ?o . }";
     private static Program program;
     private static BindingConsumerCollection triples;
-    private static final String programFile = "getSimulationGraph.n3";
-    private static final String originURI = "http://localhost:3030/simulatedGraph?graph=NodeID_1";
-    private static final String fileName = "LdfuCrawlGraph.csv";
+
+    //Case Graph
+    //private static final String programFile = "getSimulationGraph.n3";
+    //private static final String originURI = "http://localhost:3030/simulatedGraph?graph=NodeID_1";
+    //private static final String fileName = "LdfuCrawlGraph.csv";
+
+    //Case Rich Graph
+    private static final String programFile = "getRichGraph.n3";
+    private static final String fileName = "LdfuCrawlRichGraph.csv";
+    private static final String originURI = "http://localhost:3030/simulatedRichGraph?graph=NodeID_1";
+
     private static List<Long> longList;
 
     private static final int n = 100;

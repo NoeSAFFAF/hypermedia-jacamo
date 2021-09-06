@@ -81,7 +81,7 @@ task run_LdfuSingleCrawlMono(type: JavaExec, dependsOn: 'classes') {
 task run_LdfuSingleGet (type: JavaExec, dependsOn: 'classes') {
     group 'JavaLdfu'
     description 'runs the java application'
-    main = 'launcher.LdfuSingleGetEvaluation'
+    main = 'singletonLauncher.LdfuSingleGetEvaluation'
     classpath sourceSets.main.runtimeClasspath
 }
 

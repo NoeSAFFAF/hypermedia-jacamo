@@ -25,7 +25,8 @@ import java.util.logging.Logger;
  **/
 public class LdfuSingleGetEvaluation {
 
-    private static final String originURI = "http://localhost:3030/dataLdfu?graph=evaluationTest";
+    private static final String originURI = "http://localhost:3030/simulatedSingleton?graph=NodeID_1";
+    //private static final String originURI = "http://localhost:3030/dataLdfu?graph=evaluationTest";
     private static final String fileName = "LdfuGetSingle.csv";
     private static final int n = 100;
     private static List<Long> longList;
