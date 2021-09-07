@@ -5,7 +5,7 @@ mas ldfu_mas {
     //agent t_measure_singleSS_crawl_with_onto
     //agent t_measure_singleSS_crawl_with_ontoInff
     //agent t_measure_singleSS_get
-    agent t_measure_singleSS_get_with_onto
+    //agent t_measure_singleSS_get_with_onto
     //agent t_measure_singleSS_get_with_ontoInff
 
     /////////// Singleton /////////////////////
@@ -22,7 +22,7 @@ mas ldfu_mas {
     //agent t_measure_graph_crawl_with_ontoInff
     //agent t_measure_graph_crawl_with_rich_ontoInff
     //agent t_measure_graph_get
-    //agent t_measure_graph_get_with_onto
+    agent t_measure_graph_get_with_onto
     //agent t_measure_graph_get_with_ontoInff
     //agent t_measure_graph_get_with_rich_ontoInff
     //agent t_measure_graph_get_with_large_ontoInff
@@ -32,11 +32,11 @@ mas ldfu_mas {
     //agent t_measure_Rgraph_crawl
     //agent t_measure_Rgraph_crawl_with_onto
     //agent t_measure_Rgraph_crawl_with_ontoInff
-    //agent t_measure_Rgraph_crawl_with_rich_ontoInff
     //agent t_measure_Rgraph_get
     //agent t_measure_Rgraph_get_with_onto
     //agent t_measure_Rgraph_get_with_ontoInff
-
+    //agent t_measure_Rgraph_get_with_rich_ontoInff
+    //agent t_measure_Rgraph_get_with_large_ontoInff
 
 
     asl-path: src/agt/singletonGraphSosa, src/agt/singletonGraph, src/agt/simulatedGraph, src/agt/simulatedRichGraph

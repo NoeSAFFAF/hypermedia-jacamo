@@ -5,7 +5,47 @@
 
 <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> rdf:type owl:Ontology .
 
-
 srg:hasChild rdf:type rdf:Property, owl:ObjectProperty .
 srg:Node rdf:type rdfs:Class, owl:Class .
 srg:NotRelevantResource rdf:type rdfs:Class, owl:Class .
+
+srg:notRelevantProperty1 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty2 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty3 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty4 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty5 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty6 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty7 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty8 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty9 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty10 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty11 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty12 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty13 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty14 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty15 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty16 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty17 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty18 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty19 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty20 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty21 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty22 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty23 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty24 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty25 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty26 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty27 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty28 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty29 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty30 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty31 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty32 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty33 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty34 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty35 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty36 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty37 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty38 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty39 rdf:type rdf:Property, owl:ObjectProperty .
+srg:notRelevantProperty40 rdf:type rdf:Property, owl:ObjectProperty .

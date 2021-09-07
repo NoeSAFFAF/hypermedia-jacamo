@@ -9,7 +9,7 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3",true],ART_ID);
      focus(ART_ID);
      .
 
@@ -24,7 +24,7 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
     !create_artifact_ldfu;
     !create_artifact_cpu;
 	.print("Test Unit : Measure get in simulatedGraph");
-	register("onto/simulatedRichGraph.ttl");
+	register("onto/simulatedRichGraphLargeOntology.ttl");
 	!profileWithCPUArtifact;
 	.
 
@@ -38,7 +38,7 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
         };
      };
      !count;
-     writeEvaluationReport("agentCrawlRichGraphWithOnto.csv");
+     writeEvaluationReport("agentCrawlRichGraphWithRichOntoInf.csv");
 .
 
 

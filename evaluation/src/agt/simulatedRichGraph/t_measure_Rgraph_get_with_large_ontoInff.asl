@@ -2,14 +2,14 @@
  * @author Noé SAFFAF
  */
 
-entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
+entryPointGet("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 
 !start.
 
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3",true],ART_ID);
      focus(ART_ID);
      .
 
@@ -24,21 +24,28 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
     !create_artifact_ldfu;
     !create_artifact_cpu;
 	.print("Test Unit : Measure get in simulatedGraph");
-	register("onto/simulatedRichGraph.ttl");
+	register("onto/simulatedRichGraphLargeOntology.ttl");
 	!profileWithCPUArtifact;
 	.
 
 
+
+
 +!profileWithCPUArtifact : true <-
      for (.range(I,1,100)){
-        for (entryPointCrawl(IRI)){
+        for (entryPointGet(IRI)){
             !startMeasurement;
-            crawl(IRI);
+            +hasMadeRequest(nodeID_1);
+            get(IRI);
+            while (hasChild(_,CHILD)[o_uri(IRI_CHILD)] & not hasMadeRequest(CHILD) ) {
+                +hasMadeRequest(CHILD);
+                get(IRI_CHILD);
+            }
             !endMeasurement;
         };
      };
      !count;
-     writeEvaluationReport("agentCrawlRichGraphWithOnto.csv");
+     writeEvaluationReport("agentGetRichGraphWithLargeOntoInff.csv");
 .
 
 
@@ -51,6 +58,9 @@ entryPointCrawl("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
     endTimeMeasure(TIME);
     .print("Get exec time : ",TIME);
     removeAllObsPropertiesBinding;
+    while (hasMadeRequest(URI)){
+        -hasMadeRequest(URI);
+    }
 .
 
 +!count : true <-

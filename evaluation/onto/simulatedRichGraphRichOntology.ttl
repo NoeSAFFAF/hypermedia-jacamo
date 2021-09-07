@@ -1,0 +1,206 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix srg: <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+<http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> rdf:type owl:Ontology .
+
+srg:Node rdf:type rdfs:Class, owl:Class ;
+      rdfs:comment "A web node identified by its URI"@en ;
+      rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+      rdfs:label "Node"@en .
+
+
+srg:hasChild rdf:type rdf:Property, owl:ObjectProperty ;
+               rdfs:domain :Node ;
+               rdfs:range :Node ;
+               rdfs:comment "Connects two nodes"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "hasChild"@en .
+
+srg:NotRelevantResource rdf:type rdfs:Class, owl:Class ;
+      rdfs:comment "A not relevant resource"@en ;
+      rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+      rdfs:label "NotRelevantResource"@en .
+
+srg:notRelevantProperty1 rdf:type rdf:Property, owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty1"@en .
+
+srg:notRelevantProperty2 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty2"@en .
+srg:notRelevantProperty3 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty3"@en .
+srg:notRelevantProperty4 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty4"@en .
+srg:notRelevantProperty5 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty5"@en .
+srg:notRelevantProperty6 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty6"@en .
+srg:notRelevantProperty7 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty7"@en .
+srg:notRelevantProperty8 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty8"@en .
+srg:notRelevantProperty9 rdf:type rdf:Property, owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty9"@en .
+srg:notRelevantProperty10 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty10"@en .
+srg:notRelevantProperty11 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty11"@en .
+srg:notRelevantProperty12 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty12"@en .
+srg:notRelevantProperty13 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty13"@en .
+srg:notRelevantProperty14 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty14"@en .
+srg:notRelevantProperty15 rdf:type rdf:Property,  owl:ObjectProperty ;
+                   rdfs:domain :NotRelevantResource ;
+                   rdfs:range :NotRelevantResource ;
+                   rdfs:comment "Connects two not relevant resources"@en ;
+                   rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                   rdfs:label "notRelevantProperty15"@en .
+srg:notRelevantProperty16 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty16"@en .
+srg:notRelevantProperty17 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty17"@en .
+srg:notRelevantProperty18 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty18"@en .
+srg:notRelevantProperty19 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty19"@en .
+srg:notRelevantProperty20 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty20"@en .
+srg:notRelevantProperty21 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty21"@en .
+srg:notRelevantProperty22 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty22"@en .
+srg:notRelevantProperty23 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty23"@en .
+srg:notRelevantProperty24 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty24"@en .
+srg:notRelevantProperty25 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty25"@en .
+srg:notRelevantProperty26 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty26"@en .
+srg:notRelevantProperty27 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty27"@en .
+srg:notRelevantProperty28 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty28"@en .
+srg:notRelevantProperty29 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty29"@en .
+srg:notRelevantProperty30 rdf:type rdf:Property,  owl:ObjectProperty ;
+               rdfs:domain :NotRelevantResource ;
+               rdfs:range :NotRelevantResource ;
+               rdfs:comment "Connects two not relevant resources"@en ;
+               rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+               rdfs:label "notRelevantProperty30"@en .
