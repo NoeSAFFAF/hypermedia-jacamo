@@ -174,8 +174,6 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 	}
 
-	public enum ReasonerType { Pellet, HermiT}
-
 	private static final String COLLECT_QUERY = "construct { ?s ?p ?o . } where { ?s ?p ?o . }";
 	private static final String RDF_TYPE = OWLRDFVocabulary.RDF_TYPE.toString();
 
