@@ -14,6 +14,8 @@ To generate a release from source, run `gradle install` in the root directory. T
 
 To run example agents, go to the corresponding folder under `examples`.
 
+To run evaluations (only `LinkedDataFuSpider`), go to the corresponding folfer under evaluation.
+
 ## Documentation
 
 Artifacts:

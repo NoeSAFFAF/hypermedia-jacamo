@@ -38,8 +38,7 @@ sourceSets {
 
 //Agent evaluation
 task run_Agent (type: JavaExec, dependsOn: 'classes') {
-    group ' JaCaMo'
-    description 'runs the JaCaMo application'
+    group 'JaCaMo'
     doFirst {
         mkdir 'log'
     }
@@ -84,6 +83,20 @@ task run_LdfuSingleGet (type: JavaExec, dependsOn: 'classes') {
     main = 'singletonLauncher.LdfuSingleGetEvaluation'
     classpath sourceSets.main.runtimeClasspath
 }
+
+/**
+ * Evaluation performance of reasoners in agent Navgiation
+ * */
+task testEvaluationPerformancesReasonersAgt (type: JavaExec, dependsOn: 'classes') {
+    group 'JaCaMo'
+    doFirst {
+        mkdir 'log'
+    }
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'reasoners_test.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
 
 clean {
     delete 'bin'

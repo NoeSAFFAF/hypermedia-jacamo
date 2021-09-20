@@ -73,22 +73,6 @@ gradlew.bat
 
 
 
-##hypermedia-jacamo-test/ldfu-evaluation/
-/ldfu-evaluation/.gradle/
-/ldfu-evaluation/.idea/
-/ldfu-evaluation/build/
-/ldfu-evaluation/log/
-/ldfu-evaluation/gradlew
-/ldfu-evaluation/gradlew.bat
-/ldfu-evaluation/logging.properties
-
-/ldfu-evaluation/.classpath
-/ldfu-evaluation/.project
-/ldfu-evaluation/bin/*
-/ldfu-evaluation/log/*
-/ldfu-evaluation/gradle/*
-/ldfu-evaluation/.settings/*
-
 ##evaluation
 /evaluation/.gradle/
 /evaluation/.idea/
