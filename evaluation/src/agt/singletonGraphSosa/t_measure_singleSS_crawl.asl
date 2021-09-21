@@ -23,7 +23,6 @@ entryPointCrawl("http://localhost:3030/dataLdfu?graph=evaluationTest").
 +!testUnit : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure crawl test");
 	!profileWithCPUArtifact;
 	.
 

@@ -1,7 +1,7 @@
 /**
  *
  This example illustrate how to create an agent that first registers an ontology, then add (locally) an rdf
- file to call the crawl method. If the recovered triple uses vocabulary that has been registered, it adds the
+ file to call the get method. If the recovered triple uses vocabulary that has been registered, it adds the
  corresponding unary/binary beliefs in the belief base.
 
  For example, vocabulary for classes as well Object an DataProperties is added through the register ontologies:
@@ -14,11 +14,11 @@
  sosa:isHostedBy a owl:ObjectProperty ;                  =>    objectProperty("sosa:isHostedBy")
 
 
- And crawl operation adds individual and properties as triples as well as unary and binary predicates (obs properties)
+ And get operation adds individual and properties as triples as well as unary and binary predicates (obs properties)
  if the class and the properties are defined in the registered ontologies.
 
 
- Rdf Graph file for crawl                                      Observable Properties in Jacamo
+ Rdf Graph file for get                                        Observable Properties in Jacamo
  ex:ExampleSensor a sosa:Sensor ;                        =>    rdf("http://www.myexample.org/ExampleSensor","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Sensor")
                                                                sensor("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/Sensor")]
 
@@ -37,7 +37,7 @@
  Registered Owl file                                           Observable Properties in Jacamo
  sosa:Sensor rdfs:subClassOf sosa:System ;               =>    subClassOf("sosa:Sensor","sosa:System)
 
- Rdf Graph file for crawl                                      Observable Properties in Jacamo
+ Rdf Graph file for get                                        Observable Properties in Jacamo
  ex:ExampleSensor a sosa:Sensor ;                        =>    rdf("http://www.myexample.org/ExampleSensor","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Sensor")
                                                                sensor("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/Sensor")]
                                                                system("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/System")]
@@ -46,18 +46,18 @@
  * @author Noé SAFFAF
  */
 
-entryPointCrawl("ttl/instances_sosa.ttl").
+entryPointGet("ttl/instances_sosa.ttl").
 entryPointRegister("https://www.w3.org/ns/sosa/").
 
 !start.
 
-+!start : entryPointCrawl(IRI_CRAWL) & entryPointRegister(IRI_REGISTER) <-
++!start : entryPointGet(IRI_GET) & entryPointRegister(IRI_REGISTER) <-
     .my_name(NAME);
     .concat("ldfu_artifact_",NAME, NAME_ART);
     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["get.n3"],ART_ID);
     focus(ART_ID);
     register(IRI_REGISTER);
-    crawl(IRI_CRAWL);
+    get(IRI_GET);
     .
 
 

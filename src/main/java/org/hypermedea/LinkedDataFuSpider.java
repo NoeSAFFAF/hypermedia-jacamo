@@ -81,7 +81,7 @@ public class LinkedDataFuSpider extends Artifact {
 			for (OWLOntologyChange c : list) c.accept(this);
 			updateInferredProperties();
 		}
-		// FIXME if imported ontologies themselves import other ontologies, do their axioms get defined as ObsProps?
+		// Todo : Perhaps consider registered OWL files that the current OWl file uses
 
 		@Override
 		public void visit(AddImport addImport) {
@@ -106,11 +106,6 @@ public class LinkedDataFuSpider extends Artifact {
 		public void visit(AddAxiom change) {
 			if (change.getOntology().equals(rootOntology)) {
 				OWLAxiom axiom = change.getChangeData().getAxiom();
-
-				/*
-				Set<OWLAxiom> singleton = new HashSet<>();
-				singleton.add(axiom);
-				*/
 				propertiesByAxiom.put(axiom,definePropertyForAxiom(axiom));
 			}
 		}
@@ -131,18 +126,6 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 
 		private void updateInferredProperties() {
-			/*
-			long start = System.currentTimeMillis();
-			if (!reasoner.isConsistent()) {
-				log("Warning: the set of crawled statements is inconsistent...");
-				long total = System.currentTimeMillis() - start;
-				//System.out.println("Time is consistent : " + total);
-				return;
-			}
-			long total = System.currentTimeMillis() - start;
-			//System.out.println("Time is consistent : " + total);
-			*/
-
 			removeProperties(inferredProperties);
 			inferredProperties.clear();
 
@@ -161,16 +144,12 @@ public class LinkedDataFuSpider extends Artifact {
 					if (!propertiesByAxiom.containsKey(axiom)) uniqueAxioms.add(axiom);
 				}
 				inferredProperties.addAll(definePropertiesForAxioms(uniqueAxioms));
-				//inferredProperties.addAll(definePropertiesForAxioms((Set<OWLAxiom>) axioms));
 			}
 
 			for (ObsProperty p : inferredProperties) {
 				Atom annotation = ASSyntax.createAtom("inferred");
 				p.addAnnot(annotation);
 			}
-
-			//Set<? extends OWLAxiom> axioms = gen.createAxioms(ontologyManager.getOWLDataFactory(), reasoner);
-			//for (OWLAxiom axiom : ontologyManager.get)
 		}
 	}
 
@@ -198,17 +177,11 @@ public class LinkedDataFuSpider extends Artifact {
 
 
 	/**
-	 * Case define a reasoner
+	 * Some surcharges of init
 	 */
-
-
 	public void init() { init(null,false,null); }
-	public void init(boolean withInference) {
-		init(null,withInference,null);
-	}
-	public void init(String programFile) {
-		init(programFile, false,null);
-	}
+	public void init(boolean withInference) { init(null,withInference,null); }
+	public void init(String programFile) { init(programFile, false,null); }
 	public void init(String programFile, boolean withInference) { init(programFile, withInference, null);  }
 	/**
 	 * Initialize the artifact by passing a program file name to the ldfu engine.
@@ -245,8 +218,6 @@ public class LinkedDataFuSpider extends Artifact {
 			program.registerConstructQuery(query, new BindingConsumerSink(triples));
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO report error
-
 			program = null;
 		}
 	}
@@ -265,6 +236,7 @@ public class LinkedDataFuSpider extends Artifact {
 
 			OWLReasonerFactory f = null;
 
+			// Switch to know which reasoner will be used
 			if (withInference & reasonerType!=null){
 				switch (reasonerType){
 					case "Hermit":
@@ -732,7 +704,6 @@ public class LinkedDataFuSpider extends Artifact {
 				properties.add(p);
 			}
 		}
-
 		return properties;
 	}
 
