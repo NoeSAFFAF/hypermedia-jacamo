@@ -2,14 +2,14 @@
  * @author Noé SAFFAF
  */
 
-entryPointCrawl("http://localhost:3030/simulatedGraph?graph=NodeID_1").
+entryPointGet("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 
 !start.
 
 +!create_artifact_ldfu : true <-
      .my_name(NAME);
      .concat("ldfu_artifact_",NAME, NAME_ART);
-     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getGraph.n3"],ART_ID);
+     makeArtifact(NAME_ART,"org.hypermedea.LinkedDataFuSpider",["getRichGraph.n3",true,"Hermit"],ART_ID);
      focus(ART_ID);
      .
 
@@ -23,21 +23,27 @@ entryPointCrawl("http://localhost:3030/simulatedGraph?graph=NodeID_1").
 +!start : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	register("onto/simulatedGraph.ttl");
+	register("onto/simulatedGraphForReasoners.ttl");
 	!profileWithCPUArtifact;
 	.
 
 
+
+
 +!profileWithCPUArtifact : true <-
-     for (.range(I,1,100)){
-        for (entryPointCrawl(IRI)){
+     for (.range(I,1,1)){
+        for (entryPointGet(IRI)){
             !startMeasurement;
-            crawl(IRI);
+            +hasMadeRequest(nodeID_1);
+            get(IRI);
+            while (hasChild(_,CHILD)[o_uri(IRI_CHILD)] & not hasMadeRequest(CHILD) ) {
+                +hasMadeRequest(CHILD);
+                get(IRI_CHILD);
+            }
             !endMeasurement;
         };
      };
-     !count;
-     writeEvaluationReport("agentCrawlGraphWithOnto.csv");
+     writeEvaluationReport("agentGraphReasonerHermit.csv");
 .
 
 
@@ -49,13 +55,12 @@ entryPointCrawl("http://localhost:3030/simulatedGraph?graph=NodeID_1").
 +!endMeasurement : true <-
     endTimeMeasure(TIME);
     .print("Get exec time : ",TIME);
-    removeAllObsPropertiesBinding;
+    //removeAllObsPropertiesBinding;
+    while (hasMadeRequest(URI)){
+        -hasMadeRequest(URI);
+    }
 .
 
-+!count : true <-
-    .count(rdf(_,"http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.semanticweb.org/noesaffaf/simulatedGraph#Node"),COUNT);
-    .print("We have found : ", COUNT);
-.
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }

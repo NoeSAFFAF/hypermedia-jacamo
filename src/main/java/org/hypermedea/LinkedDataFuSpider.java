@@ -4,6 +4,8 @@ import cartago.Artifact;
 import cartago.OPERATION;
 import cartago.ObsProperty;
 import cartago.OpFeedbackParam;
+
+
 import edu.kit.aifb.datafu.*;
 import edu.kit.aifb.datafu.consumer.impl.BindingConsumerCollection;
 import edu.kit.aifb.datafu.engine.EvaluateProgram;
@@ -24,9 +26,14 @@ import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Atom;
 import jason.asSyntax.StringTerm;
 import jason.asSyntax.Structure;
+
+import openllet.owlapi.PelletReasonerFactory;
+import uk.ac.manchester.cs.jfact.JFactFactory;
+
 import org.hypermedea.owl.NamingStrategyFactory;
 import org.hypermedea.owl.OWLAxiomWrapper;
 import org.semanticweb.HermiT.ReasonerFactory;
+
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.OWLReasoner;
@@ -74,7 +81,7 @@ public class LinkedDataFuSpider extends Artifact {
 			for (OWLOntologyChange c : list) c.accept(this);
 			updateInferredProperties();
 		}
-		// FIXME if imported ontologies themselves import other ontologies, do their axioms get defined as ObsProps?
+		// Todo : Perhaps consider registered OWL files that the current OWl file uses
 
 		@Override
 		public void visit(AddImport addImport) {
@@ -99,11 +106,6 @@ public class LinkedDataFuSpider extends Artifact {
 		public void visit(AddAxiom change) {
 			if (change.getOntology().equals(rootOntology)) {
 				OWLAxiom axiom = change.getChangeData().getAxiom();
-
-				/*
-				Set<OWLAxiom> singleton = new HashSet<>();
-				singleton.add(axiom);
-				*/
 				propertiesByAxiom.put(axiom,definePropertyForAxiom(axiom));
 			}
 		}
@@ -124,18 +126,6 @@ public class LinkedDataFuSpider extends Artifact {
 		}
 
 		private void updateInferredProperties() {
-			/*
-			long start = System.currentTimeMillis();
-			if (!reasoner.isConsistent()) {
-				log("Warning: the set of crawled statements is inconsistent...");
-				long total = System.currentTimeMillis() - start;
-				//System.out.println("Time is consistent : " + total);
-				return;
-			}
-			long total = System.currentTimeMillis() - start;
-			//System.out.println("Time is consistent : " + total);
-			*/
-
 			removeProperties(inferredProperties);
 			inferredProperties.clear();
 
@@ -154,16 +144,12 @@ public class LinkedDataFuSpider extends Artifact {
 					if (!propertiesByAxiom.containsKey(axiom)) uniqueAxioms.add(axiom);
 				}
 				inferredProperties.addAll(definePropertiesForAxioms(uniqueAxioms));
-				//inferredProperties.addAll(definePropertiesForAxioms((Set<OWLAxiom>) axioms));
 			}
 
 			for (ObsProperty p : inferredProperties) {
 				Atom annotation = ASSyntax.createAtom("inferred");
 				p.addAnnot(annotation);
 			}
-
-			//Set<? extends OWLAxiom> axioms = gen.createAxioms(ontologyManager.getOWLDataFactory(), reasoner);
-			//for (OWLAxiom axiom : ontologyManager.get)
 		}
 	}
 
@@ -190,18 +176,13 @@ public class LinkedDataFuSpider extends Artifact {
 	}
 
 
-
-	public void init() {
-		System.out.println("hello");
-		init(null,false);
-	}
-	public void init(boolean withInference) {
-		init(null,withInference);
-	}
-	public void init(String programFile) {
-		init(programFile, false);
-	}
-
+	/**
+	 * Some surcharges of init
+	 */
+	public void init() { init(null,false,null); }
+	public void init(boolean withInference) { init(null,withInference,null); }
+	public void init(String programFile) { init(programFile, false,null); }
+	public void init(String programFile, boolean withInference) { init(programFile, withInference, null);  }
 	/**
 	 * Initialize the artifact by passing a program file name to the ldfu engine.
 	 * Attach a reasoner to the knowledge base if <code>withInference</code> is set to true.
@@ -210,9 +191,9 @@ public class LinkedDataFuSpider extends Artifact {
 	 * @param withInference whether a reasoner should perform inference or not
 	 */
 
-	public void init(String programFile, boolean withInference) {
+	public void init(String programFile, boolean withInference, String reasonerType) {
 		if (programFile!=null) initProgram(programFile);
-		initOntology(withInference);
+		initOntology(withInference, reasonerType);
 	}
 
 	private void initProgram(String programFile) {
@@ -237,8 +218,6 @@ public class LinkedDataFuSpider extends Artifact {
 			program.registerConstructQuery(query, new BindingConsumerSink(triples));
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO report error
-
 			program = null;
 		}
 	}
@@ -246,7 +225,7 @@ public class LinkedDataFuSpider extends Artifact {
 	/**
 	 * Initialize the artifact's ontology manager.
 	 */
-	private void initOntology(boolean withInference) {
+	private void initOntology(boolean withInference, String reasonerType) {
 		try {
 			rootOntology = ontologyManager.createOntology();
 
@@ -255,11 +234,33 @@ public class LinkedDataFuSpider extends Artifact {
 			ObsPropertyManager m = new ObsPropertyManager();
 			ontologyManager.addOntologyChangeListener(m, filter);
 
-			OWLReasonerFactory f = withInference
-					// HermiT reasoner (OWL DL)
-					? new ReasonerFactory()
-					// no reasoner (no implicit axiom inferred from the ontology's structure)
-					: new StructuralReasonerFactory();
+			OWLReasonerFactory f = null;
+
+			// Switch to know which reasoner will be used
+			if (withInference & reasonerType!=null){
+				switch (reasonerType){
+					case "Hermit":
+						// HermiT reasoner (OWL DL)
+						f = new ReasonerFactory();
+						break;
+
+					case "Pellet":
+						// Pellet reasoner
+						f = new PelletReasonerFactory();
+						break;
+					case "JFact":
+						//JFact reasoner
+						f = new JFactFactory();
+					default:
+
+				}
+			} else if (withInference & reasonerType == null){
+				// If we use reasoning, by defaut it is HermiT
+				f = new ReasonerFactory();
+			} else {
+				// If we don't use a reasoner
+				f = new StructuralReasonerFactory();
+			}
 
 			reasoner = f.createNonBufferingReasoner(rootOntology);
 		} catch (OWLOntologyCreationException e) {
@@ -703,7 +704,6 @@ public class LinkedDataFuSpider extends Artifact {
 				properties.add(p);
 			}
 		}
-
 		return properties;
 	}
 

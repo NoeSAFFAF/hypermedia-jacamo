@@ -1,0 +1,9 @@
+mas ldfu_mas {
+
+    //agent t_hermit_richGraph
+    //agent t_pellet_richGraph
+    agent t_JFact_richGraph
+
+    asl-path: src/agt/reasoner
+    java-path: ., src/env, src/env/profilingArtifacts
+}

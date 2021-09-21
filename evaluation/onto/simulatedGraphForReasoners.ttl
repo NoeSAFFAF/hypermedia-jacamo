@@ -1,0 +1,1123 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix srg: <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> .
+
+<http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty1
+srg:fillerProperty1 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty1"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty10
+srg:fillerProperty10 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty10"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty11
+srg:fillerProperty11 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty11"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty12
+srg:fillerProperty12 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty12"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty13
+srg:fillerProperty13 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty13"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty14
+srg:fillerProperty14 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty14"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty15
+srg:fillerProperty15 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty15"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty16
+srg:fillerProperty16 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty16"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty17
+srg:fillerProperty17 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty17"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty18
+srg:fillerProperty18 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty18"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty19
+srg:fillerProperty19 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty19"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty2
+srg:fillerProperty2 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty2"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty20
+srg:fillerProperty20 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty20"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty21
+srg:fillerProperty21 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty21"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty22
+srg:fillerProperty22 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty22"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty23
+srg:fillerProperty23 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty23"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty24
+srg:fillerProperty24 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty24"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty25
+srg:fillerProperty25 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty25"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty26
+srg:fillerProperty26 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty26"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty27
+srg:fillerProperty27 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty27"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty28
+srg:fillerProperty28 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty28"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty29
+srg:fillerProperty29 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty29"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty3
+srg:fillerProperty3 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty3"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty30
+srg:fillerProperty30 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty30"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty31
+srg:fillerProperty31 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty31"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty32
+srg:fillerProperty32 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty32"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty33
+srg:fillerProperty33 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty33"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty34
+srg:fillerProperty34 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty34"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty35
+srg:fillerProperty35 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty35"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty36
+srg:fillerProperty36 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty36"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty37
+srg:fillerProperty37 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty37"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty38
+srg:fillerProperty38 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty38"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty39
+srg:fillerProperty39 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty39"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty4
+srg:fillerProperty4 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty4"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty40
+srg:fillerProperty40 rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf srg:fillingPropertySuper ;
+                     rdfs:domain :Node ;
+                     rdfs:range :Node ;
+                     rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                     rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                     rdfs:label "fillerProperty40"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty5
+srg:fillerProperty5 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty5"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty6
+srg:fillerProperty6 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty6"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty7
+srg:fillerProperty7 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty7"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty8
+srg:fillerProperty8 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty8"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillerProperty9
+srg:fillerProperty9 rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf srg:fillingPropertySuper ;
+                    rdfs:domain :Node ;
+                    rdfs:range :Node ;
+                    rdfs:comment "A property to fille the ontology with unused axioms"@en ;
+                    rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                    rdfs:label "fillerProperty9"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#fillingPropertySuper
+srg:fillingPropertySuper rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:linkingProperty .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#hasChild
+srg:hasChild rdf:type owl:ObjectProperty ;
+             owl:equivalentProperty srg:hasLowerLevelNode ;
+             rdfs:subPropertyOf srg:hasRelation ;
+             owl:inverseOf srg:hasParent ;
+             rdfs:domain :Node ;
+             rdfs:range :Node ;
+             rdfs:comment "Connects two nodes"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "hasChild"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#hasLowerLevelNode
+srg:hasLowerLevelNode rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf srg:hasRelation ;
+                      rdfs:domain srg:Node ;
+                      rdfs:range :Node .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#hasParent
+srg:hasParent rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf srg:hasRelation ;
+              rdfs:domain srg:Node ;
+              rdfs:range :Node .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#hasRelation
+srg:hasRelation rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf srg:linkingProperty .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#linkingProperty
+srg:linkingProperty rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty1
+srg:notRelevantProperty1 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty1"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty10
+srg:notRelevantProperty10 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty10"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty11
+srg:notRelevantProperty11 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty11"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty12
+srg:notRelevantProperty12 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty12"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty13
+srg:notRelevantProperty13 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty13"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty14
+srg:notRelevantProperty14 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty14"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty15
+srg:notRelevantProperty15 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty15"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty16
+srg:notRelevantProperty16 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty16"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty17
+srg:notRelevantProperty17 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty17"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty18
+srg:notRelevantProperty18 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty18"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty19
+srg:notRelevantProperty19 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty19"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty2
+srg:notRelevantProperty2 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty2"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty20
+srg:notRelevantProperty20 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty20"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty21
+srg:notRelevantProperty21 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty21"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty22
+srg:notRelevantProperty22 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty22"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty23
+srg:notRelevantProperty23 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty23"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty24
+srg:notRelevantProperty24 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty24"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty25
+srg:notRelevantProperty25 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty25"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty26
+srg:notRelevantProperty26 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty26"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty27
+srg:notRelevantProperty27 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty27"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty28
+srg:notRelevantProperty28 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty28"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty29
+srg:notRelevantProperty29 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty29"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty3
+srg:notRelevantProperty3 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty3"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty30
+srg:notRelevantProperty30 rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                          rdfs:domain :NotRelevantResource ;
+                          rdfs:range :NotRelevantResource ;
+                          rdfs:comment "Connects two not relevant resources"@en ;
+                          rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                          rdfs:label "notRelevantProperty30"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty4
+srg:notRelevantProperty4 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty4"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty5
+srg:notRelevantProperty5 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty5"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty6
+srg:notRelevantProperty6 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty6"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty7
+srg:notRelevantProperty7 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty7"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty8
+srg:notRelevantProperty8 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty8"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantProperty9
+srg:notRelevantProperty9 rdf:type owl:ObjectProperty ;
+                         rdfs:subPropertyOf srg:notRelevantPropertySuper ;
+                         rdfs:domain :NotRelevantResource ;
+                         rdfs:range :NotRelevantResource ;
+                         rdfs:comment "Connects two not relevant resources"@en ;
+                         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                         rdfs:label "notRelevantProperty9"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#notRelevantPropertySuper
+srg:notRelevantPropertySuper rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf srg:linkingProperty .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler1
+srg:Filler1 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler1"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler10
+srg:Filler10 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler10"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler11
+srg:Filler11 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler11"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler12
+srg:Filler12 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler12"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler13
+srg:Filler13 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler13"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler14
+srg:Filler14 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler14"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler15
+srg:Filler15 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler15"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler16
+srg:Filler16 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler16"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler17
+srg:Filler17 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler17"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler18
+srg:Filler18 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler18"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler19
+srg:Filler19 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler19"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler2
+srg:Filler2 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler2"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler20
+srg:Filler20 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperA ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler20"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler21
+srg:Filler21 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler21"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler22
+srg:Filler22 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler22"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler23
+srg:Filler23 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler23"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler24
+srg:Filler24 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler24"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler25
+srg:Filler25 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler25"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler26
+srg:Filler26 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler26"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler27
+srg:Filler27 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler27"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler28
+srg:Filler28 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler28"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler29
+srg:Filler29 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler29"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler3
+srg:Filler3 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler3"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler30
+srg:Filler30 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler30"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler31
+srg:Filler31 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler31"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler32
+srg:Filler32 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler32"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler33
+srg:Filler33 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler33"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler34
+srg:Filler34 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler34"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler35
+srg:Filler35 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler35"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler36
+srg:Filler36 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler36"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler37
+srg:Filler37 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler37"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler38
+srg:Filler38 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler38"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler39
+srg:Filler39 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler39"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler4
+srg:Filler4 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler4"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler40
+srg:Filler40 rdf:type owl:Class ;
+             rdfs:subClassOf srg:FillerSuperB ;
+             rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+             rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+             rdfs:label "Filler40"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler5
+srg:Filler5 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler5"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler6
+srg:Filler6 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler6"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler7
+srg:Filler7 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler7"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler8
+srg:Filler8 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler8"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Filler9
+srg:Filler9 rdf:type owl:Class ;
+            rdfs:subClassOf srg:FillerSuperA ;
+            rdfs:comment "A class to fill the ontology with unused axioms"@en ;
+            rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+            rdfs:label "Filler9"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#FillerSuper
+srg:FillerSuper rdf:type owl:Class ;
+                rdfs:subClassOf srg:Item ;
+                owl:disjointWith srg:Node ,
+                                 srg:NotRelevantResource .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#FillerSuperA
+srg:FillerSuperA rdf:type owl:Class ;
+                 rdfs:subClassOf srg:FillerSuper .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#FillerSuperB
+srg:FillerSuperB rdf:type owl:Class ;
+                 rdfs:subClassOf srg:FillerSuper .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Item
+srg:Item rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#Node
+srg:Node rdf:type owl:Class ;
+         rdfs:subClassOf srg:Item ;
+         owl:disjointWith srg:NotRelevantResource ;
+         rdfs:comment "A web node identified by its URI"@en ;
+         rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+         rdfs:label "Node"@en .
+
+
+###  http://www.semanticweb.org/noesaffaf/simulatedRichGraph#NotRelevantResource
+srg:NotRelevantResource rdf:type owl:Class ;
+                        rdfs:subClassOf srg:Item ;
+                        rdfs:comment "A not relevant resource"@en ;
+                        rdfs:isDefinedBy <http://www.semanticweb.org/noesaffaf/simulatedRichGraph#> ;
+                        rdfs:label "NotRelevantResource"@en .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

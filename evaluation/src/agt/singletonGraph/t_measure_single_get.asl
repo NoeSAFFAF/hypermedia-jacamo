@@ -24,7 +24,6 @@ entryPointGet("http://localhost:3030/simulatedSingleton?graph=NodeID_1").
 +!testUnit : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure get test");
 	!profileWithCPUArtifact;
 	//!start;
 	.

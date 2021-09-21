@@ -1,12 +1,21 @@
 mas ldfu_mas {
 
-    // Agent acquiring RDF triples with the ldfu_spider artifact
-    agent ldfu_agent {
+    // Agent acquiring RDF triples with the ldfu_spider artifact using get
+    agent ldfu_agent_get {
         beliefs: entryPoint("http://ontology.irstea.fr/weather/data/resource/platform/VP2lesPalaquins01")
         goals: start
         join: ldfu_workspace
         focus: ldfu_workspace.ldfu_spider
     }
+
+    // Agent acquiring RDF triples with the ldfu_spider artifact using crawl
+    agent ldfu_agent_crawl {
+        beliefs: entryPoint("http://ontology.irstea.fr/weather/data/resource/platform/VP2lesPalaquins01")
+        goals: start
+        join: ldfu_workspace
+        focus: ldfu_workspace.ldfu_spider
+    }
+
 
 
 	// More example agents (uncomment if you want to try them)
@@ -15,7 +24,7 @@ mas ldfu_mas {
     agent agent_simple_crawl
     agent agent_crawl_with_register
     agent agent_inferred_register
-	
+
     // creates a Linked-Data-Fu spider, that will crawl RDF resources as specified in the Linked Data program "get.n3"
     workspace ldfu_workspace  {
         artifact ldfu_spider : org.hypermedea.LinkedDataFuSpider("get.n3")

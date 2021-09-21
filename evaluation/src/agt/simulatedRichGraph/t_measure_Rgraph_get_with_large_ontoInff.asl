@@ -23,7 +23,6 @@ entryPointGet("http://localhost:3030/simulatedRichGraph?graph=NodeID_1").
 +!start : true <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test Unit : Measure get in simulatedGraph");
 	register("onto/simulatedRichGraphLargeOntology.ttl");
 	!profileWithCPUArtifact;
 	.

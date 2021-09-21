@@ -22,7 +22,7 @@ mas ldfu_mas {
     //agent t_measure_graph_crawl_with_ontoInff
     //agent t_measure_graph_crawl_with_rich_ontoInff
     //agent t_measure_graph_get
-    agent t_measure_graph_get_with_onto
+    //agent t_measure_graph_get_with_onto
     //agent t_measure_graph_get_with_ontoInff
     //agent t_measure_graph_get_with_rich_ontoInff
     //agent t_measure_graph_get_with_large_ontoInff
@@ -38,7 +38,9 @@ mas ldfu_mas {
     //agent t_measure_Rgraph_get_with_rich_ontoInff
     //agent t_measure_Rgraph_get_with_large_ontoInff
 
+    /////////// Wikidata   /////////////////////////
+    agent t_measure_wikidata
 
-    asl-path: src/agt/singletonGraphSosa, src/agt/singletonGraph, src/agt/simulatedGraph, src/agt/simulatedRichGraph
+    asl-path: src/agt/singletonGraphSosa, src/agt/singletonGraph, src/agt/simulatedGraph, src/agt/simulatedRichGraph, src/agt/wikidataGraph
     java-path: ., src/env, src/env/profilingArtifacts
 }

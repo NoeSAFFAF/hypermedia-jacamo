@@ -1,0 +1,39 @@
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owd: <http://www.semanticweb.org/noesaffaf/wikidata1#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix wdp: <http://www.wikidata.org/prop/direct/> .
+
+<http://www.semanticweb.org/noesaffaf/wikidata1#> rdf:type owl:Ontology .
+
+wdp:P710 rdf:type rdf:Property, owl:ObjectProperty ;
+                rdfs:domain wd:Q35120 ;
+                rdfs:range wd:Q35120 ;
+                rdfs:comment "event in which a person or organization was/is a participant; inverse of P710 or P1923"@en ;
+                rdfs:isDefinedBy owd: ;
+                rdfs:label "participant"@en .
+
+wdp:P1344 rdf:type rdf:Property, owl:ObjectProperty ;
+               rdfs:domain wd:Q35120 ;
+               rdfs:range wd:Q35120 ;
+               rdfs:comment "person, group of people or organization (object) that actively takes/took part in an event or process (subject). Preferably qualify with object has role (P3831). Use P1923 for participants that are teams."@en ;
+               rdfs:isDefinedBy owd: ;
+               rdfs:label "participantIn"@en .
+
+wd:Q3624078 rdf:type rdfs:Class, owl:Class ;
+               rdfs:isDefinedBy owd: ;
+               rdfs:subClassOf wd:Q35120 ;
+               rdfs:label "souvereignState"@en .
+
+wd:Q198 rdf:type rdfs:Class, owl:Class ;
+               rdfs:isDefinedBy owd: ;
+               rdfs:subClassOf wd:Q35120 ;
+               rdfs:label "war"@en .
+
+wd:Q35120 rdf:type rdfs:Class, owl:Class ;
+               rdfs:isDefinedBy owd: ;
+               rdfs:subClassOf wd:Q35120 ;
+               rdfs:label "entity"@en .

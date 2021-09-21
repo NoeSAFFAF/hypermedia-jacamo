@@ -24,7 +24,6 @@ entryPointRegister("https://www.w3.org/ns/sosa/").
 +!testUnit : entryPointRegister(IRI_REGISTER) <-
     !create_artifact_ldfu;
     !create_artifact_cpu;
-	.print("Test : Unit measure get with onto test");
 	register(IRI_REGISTER)
 	!profileWithCPUArtifact;
 	.
