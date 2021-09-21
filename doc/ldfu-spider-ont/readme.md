@@ -80,5 +80,8 @@ The performance evaluation is only centered on CPU performances, we evaluate dif
 ### Contact
 
 Noé SAFFAF : noe.saffaf@etu.emse.fr
+<<<<<<< HEAD
 
                                                                                                                         
+=======
+>>>>>>> 3ec764e21a50a6888212bae410ee297827346ff5
