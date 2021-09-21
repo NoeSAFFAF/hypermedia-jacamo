@@ -40,41 +40,43 @@ The operations available in the Ldfu-spider artifact are follows :
 
 ### Observable properties generation
 
-For `register(https://www.w3.org/ns/sosa/)` :
+##### TBox
 
-OWL triples   | Type            |                             Observable property
-OWL triples   | Type            |                             Observable property
-ont:Sensor rdf:type owl:Class 
-sosa:Sensor a rdfs:Class , owl:Class ;                  =>    class("sosa:Sensor")
-sosa:Platform a rdfs:Class , owl:Class ;                =>    class("sosa:Platform")
-sosa:isHostedBy a owl:ObjectProperty ;                  =>    objectProperty("sosa:isHostedBy")
+For `register(pathTo/myOnto)` (TBox) :
 
+OWL triples  | Type  | Observable property
+------------- | ------------- | ------------- 
+<ont:Sensor rdf:type owl:Class>   | Class declaration | **class(sensor)**[o_uri(ont:Sensor)]
+<ont:System rdf:type owl:Class>   | Class declaration | **class(system)**[o_uri(ont:System)]
+<ont:hosts  rdf:typeowl:ObjectProperty> | Property declaration | **objectProperty(hosts)**[p_uri(ont:hosts)] 
+<ont:Sensor  rdfs:subClassOf ont:System> | Property expression | No observable property generated
 
-And crawl operation adds individual and properties as triples as well as unary and binary predicates (obs properties)
-if the class and the properties are defined in the registered ontologies.
+##### ABox
 
+For `get(URI)`,`post(URI)`,`put(URI)`,`delete(URI)`,`crawl(ENTRYPPOINT_URI)` (ABox) :
 
-Rdf Graph file for crawl                                      Observable Properties in Jacamo
-ex:ExampleSensor a sosa:Sensor ;                        =>    rdf("http://www.myexample.org/ExampleSensor","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Sensor")
-                                                              sensor("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/Sensor")]
+RDF triples  | Type  | Observable property
+------------- | ------------- | ------------- 
+<ex:MySensor  rdf:type ont:Sensor> | Default RDF conversion | **rdf(ex:MySensor,rdf:type,ont:Sensor)**
+ _| Derived assertion axiom | **sensor(mySensor)**[s_uri(ont:Sensor),o_uri(ex:MySensor)]
+ _| Inferred assertion axiom | **system(mySensor)**[s_uri(ont:System),o_uri(ex:MySensor)]
+ <ex:MySensor ont:hosts ex:MyComponent> | Default RDF conversion | **rdf(ex:MySensor,ont:hosts,ex:MyComponent)**
+ _| Derived assertion axiom | **hosts(mySensor,myComponent)**[s_uri(ex:mySensor),p_uri(ont:hosts),o_uri(ex:MyComponent)]
 
-ex:ExamplePlatform a sosaPlatform ;                     =>    rdf("http://www.myexample.org/ExamplePlatform","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Platform")
-                                                              platform("ex:ExamplePlatform")[predicate_uri("https://www.w3.org/ns/sosa/Platform")]
+### Tests
 
+The project combine both JUnit Tests and JaCaMo test unit agents to cover all provided functionalities. Tests can be found in the [source](/src/test)
 
-ex:ExampleSensor sosa:isHostedBy ex:ExamplePlateform    =>    rdf("http://www.myexample.org/ExampleSensor","http://www.w3.org/ns/sosa/isHostedBy","http://www.myexample.org/ExamplePlateform")
-                                                              isHostedBy("ex:ExampleSensor","ex:ExamplePlateform")[predicate_uri("https://www.w3.org/ns/sosa/isHostedBy")]
+### Performance evaluation
 
+The performance evaluation is only centered on CPU performances, we evaluate different navigation through 6 scenarios :
+- SingletonGraphSosa : Only one URI to query using sosa OWL vocabulary and a custom virtual MonoNode graph
+- SingletonGraph : Only one URI to query using a custom OWL vocabulary and a custom virtual MonoNode graph (both small and big ontologies)
+- SimulatedGraph : Multiple URIs to query using a custom  OWL vocabulary and a custom virtual balanced "poor" graph (both small and big ontologies)
+- SimulatedRichGraph : Multiple URIs to query using a custom  OWL vocabulary and a custom virtual balanced "rich" graph (both small and big ontologies)
+- WikidataGraph : Multiple URIs to query using a custom  OWL vocabulary and the wikidata Knowledge Graph
+- reasoners : Same as SimulatedRichGraph but using different OWL reasoners for comparison
 
-If we also consider inferred Axioms, we also generate inferred observable properties :
+### Contact
 
-(There is no vocabulary named "System" in sosa, so this is a simple illustrative case)
-
-Registered Owl file                                           Observable Properties in Jacamo
-sosa:Sensor rdfs:subClassOf sosa:System ;               =>    subClassOf("sosa:Sensor","sosa:System)
-
-Rdf Graph file for crawl                                      Observable Properties in Jacamo
-ex:ExampleSensor a sosa:Sensor ;                        =>    rdf("http://www.myexample.org/ExampleSensor","http://www.w3.org/1999/02/22-rdf-syntax-ns#type","http://www.w3.org/ns/sosa/Sensor")
-                                                              sensor("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/Sensor")]
-                                                              system("ex:ExampleSensor")[predicate_uri("https://www.w3.org/ns/sosa/System")]
-                                                                                                                        
+Noé SAFFAF : noe.saffaf@etu.emse.fr
